@@ -20,7 +20,7 @@ int main()
         if (number < 0)
             cout << "You seem to be a bit negative... :( Cheer up! " << endl;
         else
-            cout << "You must be very excited! Me too! :)" endl;
+            cout << "You must be very excited! Me too! :)" << endl;
     }
   
     return 0;
