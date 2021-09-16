@@ -40,11 +40,11 @@ int main()
 
     
     bool debug = true;
-
+    bool isGameover=false;
+    int attempt=0;
     cout << "==============================" << endl;
     cout << "Welcome to the Mastermind Game" << endl;
     cout << "==============================" << endl;
-
     if (debug){
         cout << "Coder maker's colors:" << endl;
         cout << "p0=" << p0 << "\tp1=" << p1 << "\tp2=" << p2 << "\tp3=" << p3 << endl << endl;
@@ -54,49 +54,62 @@ int main()
     cout << "Code breaker, you have 12 attempts to crack his code." << endl;
     cout << "Game starts!" << endl << endl; 
 
+    while(!isGameover){
+        
+        // Write your code below this section:
 
-    // Write your code below this section:
+        cout << "Attempt "<< ++attempt << "\nPlease input your guess:" <<whitepin<< endl;
+        cin >> g0 >> g1 >> g2 >> g3;
+        
+        //cin >> g1;
+        //cin >> g2;
+        //cin >> g3;
 
-    cout << "Please input your guess:" <<whitepin<< endl;
-    cin >> g0 >> g1 >> g2 >> g3;
-    
-    //cin >> g1;
-    //cin >> g2;
-    //cin >> g3;
-
-    if(g0 == p0 || p1 || p2 || p3){
-        cout << "great" << whitepin << endl;
-        if(g0 != p0)
-            whitepin++;
-        else
-            redpin++;
-        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+        if(g0 == p0 || p1 || p2 || p3){
+            cout << "great" << whitepin << endl;
+            if(g0 != p0)
+                whitepin++;
+            else
+                redpin++;
+            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+        }
+        if(g1 == p0 || p1 || p2 || p3){
+            cout << "great" << endl;
+            if(g1 == p1){
+                redpin++;
+            }else
+            {whitepin++;}
+            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+        }
+        if(g2 == p0 || p1 || p2 || p3){
+            cout << "great" << endl;
+            if(g2 == p2)
+                redpin++;
+            else
+                whitepin++;
+            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+        }
+        if(g3 == p0 || p1 || p2 || p3){
+            cout << "great" << endl;
+            if(g3 == p3)
+                redpin++;
+            else
+                whitepin++;
+            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+        }
+        if (redpin ==4){
+            cout<< "Code breaker, you have " << attempt <<" attempts to crack his code." << endl;
+            isGameover=true;
+        }else{
+            redpin=0;
+            whitepin=0;
+        }
+        if(attempt==12){
+            isGameover=true;
+        }
     }
-    if(g1 == p0 || p1 || p2 || p3){
-        cout << "great" << endl;
-        if(g1 == p1)
-            redpin++;
-        else
-            whitepin++;
-        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
-    }
-    if(g2 == p0 || p1 || p2 || p3){
-        cout << "great" << endl;
-        if(g2 == p2)
-            redpin++;
-        else
-            whitepin++;
-        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
-    }
-    if(g3 == p0 || p1 || p2 || p3){
-        cout << "great" << endl;
-        if(g3 == p3)
-            redpin++;
-        else
-            whitepin++;
-        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
-    }
-
+    if (isGameover)
+        cout << "game is over";
 
 
 
