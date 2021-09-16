@@ -59,10 +59,37 @@ int main()
 
     cout << "Please input your guess:" << endl;
     cin >> g0 >> g1 >> g2 >> g3;
+    
     //cin >> g1;
     //cin >> g2;
     //cin >> g3;
 
+    if(g0 == p0 || p1 || p2 || p3){
+        cout << "great" << endl;
+        if(g0 == p0){
+            redpin++;
+        }else if(g0 == p1){
+            whitepin++;
+        }else if(g0 == p2){
+            whitepin++;
+        }else if(g0 == p3){
+            whitepin++;
+        }
+        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+    }
+    if(g1 == p0 || p1 || p2 || p3){
+        cout << "great" << endl;
+        if(g1 == p1){
+            redpin++;
+        }else if(g1 == p0){
+            whitepin++;
+        }else if(g1 == p2){
+            whitepin++;
+        }else if(g1 == p3){
+            whitepin++;
+        }
+        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+    }
 
 
 
