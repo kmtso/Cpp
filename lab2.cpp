@@ -27,7 +27,7 @@ int main()
     // white: correct color but wrong position
     // red overrides white
     int redpin;
-    int whitepin;
+    int whitepin=0;
 
     //you may declare additional variables here  to help you solve the problem:
     
@@ -57,7 +57,7 @@ int main()
 
     // Write your code below this section:
 
-    cout << "Please input your guess:" << endl;
+    cout << "Please input your guess:" <<whitepin<< endl;
     cin >> g0 >> g1 >> g2 >> g3;
     
     //cin >> g1;
@@ -65,29 +65,35 @@ int main()
     //cin >> g3;
 
     if(g0 == p0 || p1 || p2 || p3){
-        cout << "great" << endl;
-        if(g0 == p0){
+        cout << "great" << whitepin << endl;
+        if(g0 != p0)
+            whitepin++;
+        else
             redpin++;
-        }else if(g0 == p1){
-            whitepin++;
-        }else if(g0 == p2){
-            whitepin++;
-        }else if(g0 == p3){
-            whitepin++;
-        }
         cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
     }
     if(g1 == p0 || p1 || p2 || p3){
         cout << "great" << endl;
-        if(g1 == p1){
+        if(g1 == p1)
             redpin++;
-        }else if(g1 == p0){
+        else
             whitepin++;
-        }else if(g1 == p2){
+        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+    }
+    if(g2 == p0 || p1 || p2 || p3){
+        cout << "great" << endl;
+        if(g2 == p2)
+            redpin++;
+        else
             whitepin++;
-        }else if(g1 == p3){
+        cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+    }
+    if(g3 == p0 || p1 || p2 || p3){
+        cout << "great" << endl;
+        if(g3 == p3)
+            redpin++;
+        else
             whitepin++;
-        }
         cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
     }
 
