@@ -66,15 +66,15 @@ int main()
         //cin >> g3;
 
         if(g0 == p0 || g0 == p1 || g0 ==p2 || g0 ==p3){
-            cout << "great" << whitepin << endl;
+
             if(g0 == p0 )
                 redpin++;
             else if ((g0==p1 && g1!=p1)||(g0==p2 && g2!=p2)||(g0==p3 && g3!=p3))
                 whitepin++;
-            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+           cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
         if(g1 == p0 || g1 == p1 || g1 == p2 || g1 == p3){
-            cout << "great" << endl;
+
             if(g1 == p1){
                 redpin++;
             }else if ((g1==p0 && g0!=p0)||(g1==p2 && g2!=p2)||(g1==p3 && g3!=p3))
@@ -82,25 +82,29 @@ int main()
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
         if(g2 == p0 || g2 == p1 || g2 == p2 || g2 == p3){
-            cout << "great" << endl;
+
             if(g2 == p2)
                 redpin++;
-            else if ((g2==p0 && g0!=p0)||(g2==p1 && g1!=p1)||(g2==p3 && g3!=p3))
+            else if (((g2==p0 && g0!=p0)||(g2==p1 && g1!=p1)||(g2==p3 && g3!=p3))&&g1!=p0)
                 whitepin++;
-            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+         cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
         if(g3 == p0 || g3 == p1 || g3 == p2 || g3 == p3){
-            cout << "great" << endl;
+
             if(g3 == p3)
                 redpin++;
-            else if ((g3==p0 && g0!=p0)||(g3==p1 && g1!=p1)||(g3==p2 && g2!=p2))
+            else if ((g3==p0 && g0!=p0 && g1!=p0 && g2!=p0)||(g3==p1 && g1!=p1 && g2!=p1)||(g3==p2 && g2!=p2))
                 whitepin++;
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
+       //             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+
         if (redpin ==4){
             cout<< "Code breaker, you have " << attempt <<" attempts to crack his code." << endl;
             isGameover=true;
         }else{
+            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+
             redpin=0;
             whitepin=0;
         }
