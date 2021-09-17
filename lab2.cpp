@@ -85,7 +85,7 @@ int main()
 
             if(g2 == p2)
                 redpin++;
-            else if ((g2==p0 && g0!=p0 &&g1!=p0)||(g2==p1 && g1!=p1)||(g2==p3 && g3!=p3))
+            else if ((g2==p0 && g0!=p0 &&g1!=p0)||(g2==p1 && g1!=p1 && g0!=p1)||(g2==p3 && g3!=p3))
                 whitepin++;
          cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
@@ -93,7 +93,7 @@ int main()
 
             if(g3 == p3)
                 redpin++;
-            else if ((g3==p0 && g0!=p0 && g1!=p0 && g2!=p0)||(g3==p1 && g1!=p1 && g2!=p1)||(g3==p2 && g2!=p2))
+            else if ((g3==p0 && g0!=p0 && g1!=p0 && g2!=p0)||(g3==p1 && g1!=p1 && g2!=p1 && g0!=p1)||(g3==p2 && g2!=p2))
                 whitepin++;
            cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
