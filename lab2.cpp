@@ -65,35 +65,35 @@ int main()
         //cin >> g2;
         //cin >> g3;
 
-        if(g0 == p0 || p1 || p2 || p3){
+        if(g0 == p0 || g0 == p1 || g0 ==p2 || g0 ==p3){
             cout << "great" << whitepin << endl;
-            if(g0 != p0)
-                whitepin++;
-            else
+            if(g0 == p0 )
                 redpin++;
+            else if ((g0==p1 && g1!=p1)||(g0==p2 && g2!=p2)||(g0==p3 && g3!=p3))
+                whitepin++;
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
-        if(g1 == p0 || p1 || p2 || p3){
+        if(g1 == p0 || g1 == p1 || g1 == p2 || g1 == p3){
             cout << "great" << endl;
             if(g1 == p1){
                 redpin++;
-            }else
+            }else if ((g1==p0 && g0!=p0)||(g1==p2 && g2!=p2)||(g1==p3 && g3!=p3))
             {whitepin++;}
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
-        if(g2 == p0 || p1 || p2 || p3){
+        if(g2 == p0 || g2 == p1 || g2 == p2 || g2 == p3){
             cout << "great" << endl;
             if(g2 == p2)
                 redpin++;
-            else
+            else if ((g2==p0 && g0!=p0)||(g2==p1 && g1!=p1)||(g2==p3 && g3!=p3))
                 whitepin++;
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
-        if(g3 == p0 || p1 || p2 || p3){
+        if(g3 == p0 || g3 == p1 || g3 == p2 || g3 == p3){
             cout << "great" << endl;
             if(g3 == p3)
                 redpin++;
-            else
+            else if ((g3==p0 && g0!=p0)||(g3==p1 && g1!=p1)||(g3==p2 && g2!=p2))
                 whitepin++;
             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
@@ -106,17 +106,11 @@ int main()
         }
         if(attempt==12){
             isGameover=true;
+            // Player runs out of attempts and loses 
+            cout << "Sorry, you ran out of turns :( "<< endl; 
         }
     }
     if (isGameover)
-        cout << "game is over";
-
-
-
-
-
-    // Player runs out of attempts and loses 
-    cout << "Sorry, you ran out of turns :( "<< endl; 
-
+        cout<<"game over! Thank you for your playing";
     return 0;
 }
