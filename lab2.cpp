@@ -64,7 +64,7 @@ int main()
         //cin >> g1;
         //cin >> g2;
         //cin >> g3;
-
+        /*
         if(g0 == p0 || g0 == p1 || g0 ==p2 || g0 ==p3){
 
             if(g0 == p0 )
@@ -98,7 +98,25 @@ int main()
           //cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
        //             cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
-
+        */
+               //Consider position 0
+        if (p0 ==g0)
+            redpin++;
+        else if (p0==g1 && g1!=p1|| p0== g2  && g2!=p2|| p0==g3 && g3!=p3)
+            whitepin++;
+        //Consider position 1
+        if (g1 == p1)
+            redpin++;
+        else if (p1 == g0 && g0!=p0|| p1==g2 && g2!=p2 || p1==g3 && g3!=p3)
+            whitepin++;
+        if (g2 == p2)
+            redpin++;
+        else if (p2 == g0 && g0!=p0|| p2==g1 && g1!=p1 || p2==g3 && g3!=p3)
+            whitepin++;
+        if (g3 == p3)
+            redpin++;
+        else if (p3 == g0 && g0!=p0|| p3==g1 && g1!=p1 || p3==g2 && g2!=p2)
+            whitepin++;
         if (redpin ==4){
             cout<< "Code breaker, you have " << attempt <<" attempts to crack his code." << endl;
             isGameover=true;
