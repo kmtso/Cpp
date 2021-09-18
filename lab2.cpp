@@ -11,10 +11,10 @@ int main()
     srand( time(NULL) );
     //Codemaker's choice of a random 4-color combination among six colors 
     // 1 Yellow, 2 Orange, 3 black, 4 Green, 5 Blue, 6 Purple
-    int p0 =rand() % 6 + 1; // 1 to 6
-    int p1 = rand() % 6 + 1; // 1 to 6
-    int p2 = rand() % 6 + 1; // 1 to 6
-    int p3 = rand() % 6 + 1; // 1 to 6
+    int p0 = 3;//rand() % 6 + 1; // 1 to 6
+    int p1 = 3;//rand() % 6 + 1; // 1 to 6
+    int p2 = 1;//rand() % 6 + 1; // 1 to 6
+    int p3 = 6;//rand() % 6 + 1; // 1 to 6
 
     // variable for code breaker's guess
     int g0;
@@ -85,7 +85,7 @@ int main()
 
             if(g2 == p2)
                 redpin++;
-            else if ((g2==p0 && (g0!=p0 ||(g0==p0&&p0==p1)) &&(g1!=p0 ||(g1==p0 &&p0==p1)))||(g2==p1 && g1!=p1 && (g0!=p1 ||(g0==p3 && p3==p1)))||(g2==p3 && g3!=p3 &&(g1!=p3 ||((g1==p3 && (p1==p3|| p3==p0 || p3==p2)))) && (g0!=p3||(g0==p3 && p3==p0))))
+            else if ((g2==p0 && (g0!=p0) &&(g1!=p0 ||(g1==p0 &&p0==p1)))||(g2==p1 && g1!=p1 && (g0!=p1 ||(g0==p3 && p3==p1|| (g0==p1&&p1==p0))))||(g2==p3 && g3!=p3 &&(g1!=p3 ||((g1==p3 && (p1==p3|| p3==p0 || p3==p2)))) && (g0!=p3||(g0==p3 && p3==p0))))
                 whitepin++;
          cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
         }
@@ -103,7 +103,7 @@ int main()
             //cout<< "Code breaker, you have " << attempt <<" attempts to crack his code." << endl;
             isGameover=true;
         }else{
-          //  cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
+            //cout<< "Red pins:"<< redpin << ", White pins:" << whitepin <<endl;
 
             redpin=0;
             whitepin=0;
