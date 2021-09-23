@@ -5,30 +5,21 @@
 #include <climits> // limits for integral types
 #include<vector>
 #include <algorithm>
-using namespace std;
 
+using namespace std;
 // This function will return the number of occurrence of a digit in a number.
 int occurrence_counting(unsigned int number_to_process, unsigned int digit){
     unsigned int num= number_to_process;
     unsigned int dig=digit;
-    int arr[10];
     int count=0;
-    if (num==dig){
-        count++;
-    }
-    for (int i=9;i>=0;i--){
-        arr[i]=num%10;
-        if(num==0){
-            arr[i]=-1;
+
+        
+    do{
+        if(num%10==dig){
+           count++;
         }
         num/=10;
-
-    }
-    for(int i=9;i>=0;i--){
-        if (arr[i]==dig){
-            count++;
-        }
-    }
+    }while (num!=0);
 
     return count;
 }
@@ -104,8 +95,9 @@ int index_finding(unsigned int number_to_process, unsigned int digit, unsigned i
 void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurrence_threshold){
     unsigned int num=number_to_process;
     unsigned int occ=occurrence_threshold;
-    char str[]="";
+    string str="";
     vector<int>digits;
+    vector<int>digits_fulfill;
 
         while(num){
         digits.push_back(num%10);
@@ -113,15 +105,43 @@ void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurr
     }
         // reversing the order of the elements inside vector "digits" as they are collected from last to first and we want them from first to last.
     reverse(digits.begin(), digits.end());
-    
+    int count=0;
+
+   /*   occurrence_counting(num,0);  
+  do{
+        if(num%10==1){
+           count++;
+        }
+        num/=10;
+    }while (num!=0);
+  */
     // Now the vector "digits" contains the digits of the given number. You can access the elements of a vector using their indices in the same way you access the elements of an array.
-    for(int i = 0; i < digits.size(); i++){
-        cout<< occurrence_counting(num,i)<<endl;
-        if (occurrence_counting(num,i) >occurrence_threshold){
-        str+i;
-        }
-        }
-    cout<< str<<endl;    
+      //  for( int i = 0; i < digits.size(); i++){
+            for (int j=0; j<=9;j++){
+                
+                    do{
+                        if(num%10==j){
+                            count++;
+                   //     cout<<count<<endl;
+
+                        }
+                    if (count>occurrence_threshold){
+                    digits_fulfill.push_back(j);
+         
+                    }
+                        num/=10;
+                        }while (num!=0);
+                num=number_to_process;
+                count=0;
+       //     }
+
+     
+        //cout<<str<<endl;
+        }          for(int i = 0; i < digits_fulfill.size(); i++){
+               cout<<digits_fulfill[i]<<endl;
+         }
+
+ //}*/  
         /*
     if (occurrence_counting(num,0)>occurrence_threshold){
         str+0;
