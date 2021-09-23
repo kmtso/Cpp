@@ -138,7 +138,8 @@ void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurr
      
         //cout<<str<<endl;
         }          for(int i = 0; i < digits_fulfill.size(); i++){
-               cout<<digits_fulfill[i]<<endl;
+               if(digits_fulfill[i]!=digits_fulfill[i-1])
+                cout<<digits_fulfill[i]<<" ";
          }
 
  //}*/  
