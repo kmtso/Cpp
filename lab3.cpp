@@ -73,21 +73,20 @@ void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurr
         // reversing the order of the elements inside vector "digits" as they are collected from last to first and we want them from first to last.
     reverse(digits.begin(), digits.end());
     int count=0;
+    num=number_to_process;
     if (number_to_process>9){
-        for (int j=0; j<=9;j++){
-                
+        for (int j=0; j<=9;++j){
+               
                 do{
+                    // cout<<num<<"(num),"<<j<<"(j),";
                     if(num%10==j){
-                         count++;
-               //     cout<<count<<endl;
-
-                        }
-                    
-                    if (count>occurrence_threshold){
-                    digits_fulfill.push_back(j);
-         
+                        count++;
+                    //    cout<<num<<","<<j<<","<<count<<endl;
                     }
                     num/=10;}while (num!=0);
+                    
+                    if (count>occurrence_threshold){
+                        digits_fulfill.push_back(j);}
                 num=number_to_process;
                 count=0;
         }
