@@ -63,40 +63,15 @@ int index_finding(unsigned int number_to_process, unsigned int digit, unsigned i
 void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurrence_threshold){
     unsigned int num=number_to_process;
     unsigned int occ=occurrence_threshold;
-    vector<int>digits;
     vector<int>digits_fulfill;
 
-        while(num){
-        digits.push_back(num%10);
-        num=num/10;
-    }
-        // reversing the order of the elements inside vector "digits" as they are collected from last to first and we want them from first to last.
-    reverse(digits.begin(), digits.end());
-    int count=0;
-    num=number_to_process;
-    if (number_to_process>9){
-        for (int j=0; j<=9;++j){
-               
-                do{
-                    // cout<<num<<"(num),"<<j<<"(j),";
-                    if(num%10==j){
-                        count++;
-                    //    cout<<num<<","<<j<<","<<count<<endl;
-                    }
-                    num/=10;}while (num!=0);
-                    
-                    if (count>occurrence_threshold){
+ 
+
+        for (unsigned int j=0; j<=9;++j){                    
+                    if (occurrence_counting(num,j)>occurrence_threshold){
                         digits_fulfill.push_back(j);}
-                num=number_to_process;
-                count=0;
         }
-}else{
-    if (occurrence_threshold==0){
-        digits_fulfill.push_back(number_to_process);
-    }
-}
-                  for(int i = 0; i < digits_fulfill.size(); i++){
-               if(digits_fulfill[i]!=digits_fulfill[i-1])
+        for(int i = 0; i < digits_fulfill.size(); i++){
                 cout<<digits_fulfill[i]<<" ";
          }
 }
