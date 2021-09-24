@@ -50,39 +50,7 @@ int index_finding(unsigned int number_to_process, unsigned int digit, unsigned i
             if(visit_time==order)
                 return i;
         }
-    } //cout << digits[i] << " ";
-
-    /*
-    int arr[10];
-    // You may count the number of digits of number_to_process first
-    do{
-        count++;
-        if(num%10==dig){
-            occurrence_count++;
-        }
-        num/=10;
-    }while (num!=0);
-    cout << count <<endl;
-    cout << occurrence_count <<endl;
-
-    cout << num2/100 <<endl;*/
-    // then you can extract the digit at position i as the remainder by dividing appropriate number
-    /*for (int i=count;i>0;i--){
-        int n=pow(10,i-1);
-        (int) num2% n;
-        if ((int) num2% n==dig)
     }
-
-    
-    while(num2!=0){
-        if(ord=1 && num2%10==dig){
-            return count-1;
-        }
-        if (dig<ord)
-            return count=-1;
-        num2/=10;
-        count--;
-    }*/
 
 
     return count-1;
@@ -95,7 +63,6 @@ int index_finding(unsigned int number_to_process, unsigned int digit, unsigned i
 void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurrence_threshold){
     unsigned int num=number_to_process;
     unsigned int occ=occurrence_threshold;
-    string str="";
     vector<int>digits;
     vector<int>digits_fulfill;
 
@@ -106,62 +73,33 @@ void filtering_by_occurrence(unsigned int number_to_process, unsigned int occurr
         // reversing the order of the elements inside vector "digits" as they are collected from last to first and we want them from first to last.
     reverse(digits.begin(), digits.end());
     int count=0;
-
-   /*   occurrence_counting(num,0);  
-  do{
-        if(num%10==1){
-           count++;
-        }
-        num/=10;
-    }while (num!=0);
-  */
-    // Now the vector "digits" contains the digits of the given number. You can access the elements of a vector using their indices in the same way you access the elements of an array.
-      //  for( int i = 0; i < digits.size(); i++){
-            for (int j=0; j<=9;j++){
+    if (number_to_process>9){
+        for (int j=0; j<=9;j++){
                 
-                    do{
-                        if(num%10==j){
-                            count++;
-                   //     cout<<count<<endl;
+                do{
+                    if(num%10==j){
+                         count++;
+               //     cout<<count<<endl;
 
                         }
+                    
                     if (count>occurrence_threshold){
                     digits_fulfill.push_back(j);
          
                     }
-                        num/=10;
-                        }while (num!=0);
+                    num/=10;}while (num!=0);
                 num=number_to_process;
                 count=0;
-       //     }
-
-     
-        //cout<<str<<endl;
-        }          for(int i = 0; i < digits_fulfill.size(); i++){
+        }
+}else{
+    if (occurrence_threshold==0){
+        digits_fulfill.push_back(number_to_process);
+    }
+}
+                  for(int i = 0; i < digits_fulfill.size(); i++){
                if(digits_fulfill[i]!=digits_fulfill[i-1])
                 cout<<digits_fulfill[i]<<" ";
          }
-
- //}*/  
-        /*
-    if (occurrence_counting(num,0)>occurrence_threshold){
-        str+0;
-    }
-    if (occurrence_counting(num,1)>occurrence_threshold){
-        if(str=="")
-            str+1;
-    }
-    if (occurrence_counting(num,2)>occurrence_threshold){
-        str+2;
-    }
-    if (occurrence_counting(num,3)>occurrence_threshold){
-        str+3;
-    }
-    if (occurrence_counting(num,1)>occurrence_threshold){
-        str+1;
-    }*/
-
-
 }
 
 
