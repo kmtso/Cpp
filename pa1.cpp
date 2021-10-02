@@ -33,14 +33,14 @@ const int MAX_ROTATIONS = 1024;
 int rotate(int arr[], int arrLen, int k)
 {
    // Task 1 TODO
-    if (k<0 &&k>=arrLen){
+    if (k<0 || k>=arrLen){
         cout<<"Error: Index k is out of range."<<endl;
         return -1;
     }
     else{
     //for(int i=0; i<arrLen; i++){
     //    arr[i]=arr_o[k-i];
-        reverse(arr,arr+k);
+        reverse(arr,arr+(k+1));
         return 0;
     }
 
@@ -50,14 +50,122 @@ int rotate(int arr[], int arrLen, int k)
 
 //Task 2
 int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[], int &rotationLen)
-{
+{   
+    int left=0;
+    int right=0;
+    rotationLen=0;
+    if(indexB>indexA){
+        right=indexB;
+        left=indexA;
+    }else{
+        right=indexA;
+        left=indexB;        
+    }
     // Task 2 TODO
-    if ((indexA<0 &&indexA>=arrLen) ||(indexB<0 &&indexB>=arrLen) ){
+    if (indexA<0 ||indexA>=arrLen ||indexB<0 ||indexB>=arrLen ){
         cout<<"Error: Index k is out of range."<<endl;
         return -1;
+    }else{
+        int k=0;int c=1;
+        if(left==0){
+            k=right;
+            c=3;
+        }
+        for(;c<7;c++){
+        switch (c)
+        {
+        case 1:
+                    if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            break;
+        case 2:
+            if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            break;
+        case 3:
+
+            k=right;                    
+            
+            if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            break;
+        case 4:
+            k=right-left-1;
+            if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            break;
+        case 5:
+            k=right-left-2;
+                        if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            break;
+        case 6:
+
+            k=right-1;                    if(k<1){
+                continue;
+            }
+            rotate(arr,arrLen,k);
+            rotations[rotationLen]=k;
+            rotationLen++;
+            k=0;
+            break;
+
+        default:
+            break;
+        }}return 0;
+      /*  for (int i=0;i<rotationLen;i++){
+            rotations[0]=       
+        }
+        
+        int temp=arr[indexA];
+        arr[indexB]=arr[indexA];
+        arr[indexA]=temp;
+        if (indexA>0){
+        reverse(arr,arr+(indexA-1)+1);
+        rotations[0]=indexA-1;
+        rotationLen++;
+        reverse(arr,arr+(indexA)+1);
+        rotations[1]=indexA;
+        rotationLen++;
+        reverse(arr,arr+(indexB)+1);
+        rotations[2]=indexB;
+        rotationLen++;
+        reverse(arr,arr+(indexB-indexA-1)+1);
+        rotations[3]=indexB-indexA-1;
+        rotationLen++;
+        reverse(arr,arr+(indexB-indexA-2)+1);
+        rotations[4]=indexB-indexA-2;
+        rotationLen++;
+        reverse(arr,arr+(indexB-1)+1);
+        rotations[5]=indexB-1;
+        rotationLen++;}else if(indexA==0){
+            reverse(arr,arr+(indexB)+1);
+            rotations[0]=indexB;
+            rotationLen++;
+        }*/
     }
     // End of Task 2 TODO
-    return 0;
+    
 }
 
 //Task 3
