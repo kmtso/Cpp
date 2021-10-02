@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <limits>
+#include<algorithm>
 using namespace std;
 
 // Global Constants
@@ -31,17 +32,32 @@ const int MAX_ROTATIONS = 1024;
 // Task 1
 int rotate(int arr[], int arrLen, int k)
 {
-    // Task 1 TODO
+   // Task 1 TODO
+    if (k<0 &&k>=arrLen){
+        cout<<"Error: Index k is out of range."<<endl;
+        return -1;
+    }
+    else{
+    //for(int i=0; i<arrLen; i++){
+    //    arr[i]=arr_o[k-i];
+        reverse(arr,arr+k);
+        return 0;
+    }
 
     // End of Task 1 TODO
+
 }
 
 //Task 2
 int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[], int &rotationLen)
 {
     // Task 2 TODO
-
+    if ((indexA<0 &&indexA>=arrLen) ||(indexB<0 &&indexB>=arrLen) ){
+        cout<<"Error: Index k is out of range."<<endl;
+        return -1;
+    }
     // End of Task 2 TODO
+    return 0;
 }
 
 //Task 3
@@ -56,7 +72,7 @@ void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
 int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &rotationLen)
 {
     // Task 4 TODO
-
+    return 0;
     // End of Task 4 TODO
 }
 
