@@ -66,7 +66,7 @@ int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[]
         cout<<"Error: Index k is out of range."<<endl;
         return -1;
     }else{
-        int k=0;int c=1;
+        int k=left-1;int c=1;
         if(left==0){
             k=right;
             c=3;
@@ -83,6 +83,7 @@ int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[]
             rotationLen++;
             break;
         case 2:
+        k=left;
             if(k<1){
                 continue;
             }
@@ -171,8 +172,18 @@ int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[]
 //Task 3
 void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
 {
+    bool swapped=false;
     // Task 3 TODO
+    do{
+        swapped=false;
+        for(int i=0;i< arrLen-1;i++){
+            if(arr[i]>arr[i+1]){
+                swapAndRecord(arr,arrLen,i,i+1,rotations,rotationLen);swapped=true;
+            }
+        
+            }}while (swapped);
 
+    
     // End of Task 3 TODO
 }
 
