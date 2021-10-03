@@ -172,8 +172,9 @@ int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[]
 //Task 3
 void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
 {
-    bool swapped=false;
+    
     // Task 3 TODO
+    bool swapped=false;
     do{
         swapped=false;
         for(int i=0;i< arrLen-1;i++){
@@ -191,6 +192,39 @@ void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
 int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &rotationLen)
 {
     // Task 4 TODO
+    int* source=src;
+    int* target=tgt;
+    bool swapped=false;
+        do{
+            swapped=false;
+            for(int i=0;i<arrLen;i++){
+                if(source[i]>source[i+1]){
+                int temp=source[i];
+                source[i]=source[i+1];
+                source[i+1]=temp;
+                swapped=true;
+            }
+   
+            }
+            }while (swapped); 
+
+        do{
+            swapped=false;
+            for(int i=0;i<arrLen;i++){
+                if(target[i]>target[i+1]){
+                int temp=target[i];
+                target[i]=target[i+1];
+                target[i+1]=temp;
+                swapped=true;
+            }
+            }
+            }while (swapped); 
+    for (int i=0;i<arrLen;i++){
+    	if (source[i]!=target[i]){
+        return -1;
+    	}
+    }
+
     return 0;
     // End of Task 4 TODO
 }
