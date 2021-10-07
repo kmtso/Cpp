@@ -206,7 +206,8 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
     int* target=tgt;
     bool swapped=false;
     vector<int>src_0;
-    vector<int>tgt_0;
+    vector<int>tgt_0;    vector<int>digits;
+
     for (int i=0;i<arrLen;i++){
         src_0.push_back(src[i]);//copying original array to vector
         tgt_0.push_back(tgt[i]);
@@ -238,18 +239,15 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
 
         sortAndRecord(src,arrLen,rotations,rotationLen);
         sortAndRecord(tgt,arrLen,rotations,rotationLen);
-                for (int i=0;i<arrLen;i++){
-        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
- 
-    	}
+
     for (int i=0;i<arrLen;i++){
     	if (source[i]!=target[i]){
             return -1;
     	}
     }
     for (int i=0;i<arrLen;i++){
-        src[i]=src_0[i];//copying original array to vector
-        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
+        src[i]=src_0[i];//copying original array to src array
+//        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
         tgt[i]=tgt_0[i];
     	}
     
@@ -258,23 +256,32 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
         {
             for(int j=0;j<=i;j++){
                 swapAndRecord(src,arrLen,i,j,rotations,rotationLen);    
-                cout<<rotations[j]<<","<<endl;
-
-                if(src[j]!=tgt[j])
+                 //cout<<rotations[j]<<","<<endl;
+                for(int j=0; j<rotationLen;j++){
+                    //cout<<rotations[j]<<","<<endl;
+                    digits.push_back(rotations[j]);
+                }
+                if(src[j]!=tgt[j]){
                  swapAndRecord(src,arrLen,i,j,rotations,rotationLen);    
-
-
+                for(int j=0; j<rotationLen;j++){
+                    //cout<<rotations[j]<<","<<endl;
+                    digits.push_back(rotations[j]);
+                }
+                }
             }
         }
-        
+        rotationLen=digits.size();
+    for (int i=0; i<rotationLen;i++){
+        rotations[i]=digits[i];
+    }    
     }
-     for (int i=0;i<arrLen;i++){
+
+       
+    /*     for (int i=0;i<arrLen;i++){
 
         cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
 
     	}
-       
-    /*
     source=src;
     rotate(src,arrLen,1);
     rotations[rotationLen]=1;
