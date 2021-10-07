@@ -10,6 +10,8 @@
 #include <iostream>
 #include <limits>
 #include<algorithm>
+#include<vector>
+
 using namespace std;
 
 // Global Constants
@@ -63,7 +65,7 @@ int swapAndRecord(int arr[], int arrLen, int indexA, int indexB, int rotations[]
     }
     // Task 2 TODO
     if (indexA<0 ||indexA>=arrLen ||indexB<0 ||indexB>=arrLen ){
-        cout<<"Error: Index k is out of range."<<endl;
+        cout<<"Error: Index out of range."<<endl;
         return -1;
     }else{
         int k=left-1;int c=1;
@@ -175,16 +177,24 @@ void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
     
     // Task 3 TODO
     bool swapped=false;
+    vector<int>digits;
     do{
         swapped=false;
         for(int i=0;i< arrLen-1;i++){
             if(arr[i]>arr[i+1]){
-                swapAndRecord(arr,arrLen,i,i+1,rotations,rotationLen);swapped=true;
+                swapAndRecord(arr,arrLen,i,i+1,rotations,rotationLen);
+                for(int j=0; j<rotationLen;j++){
+                    //cout<<rotations[j]<<","<<endl;
+                    digits.push_back(rotations[j]);
+                }
+                swapped=true;
             }
         
             }}while (swapped);
-
-    
+    rotationLen=digits.size();
+    for (int i=0; i<rotationLen;i++){
+        rotations[i]=digits[i];
+    }
     // End of Task 3 TODO
 }
 
@@ -195,6 +205,12 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
     int* source=src;
     int* target=tgt;
     bool swapped=false;
+    vector<int>src_0;
+    vector<int>tgt_0;
+    for (int i=0;i<arrLen;i++){
+        src_0.push_back(src[i]);//copying original array to vector
+        tgt_0.push_back(tgt[i]);
+    	}/*
         do{
             swapped=false;
             for(int i=0;i<arrLen;i++){
@@ -218,13 +234,56 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
                 swapped=true;
             }
             }
-            }while (swapped); 
+            }while (swapped); */
+
+        sortAndRecord(src,arrLen,rotations,rotationLen);
+        sortAndRecord(tgt,arrLen,rotations,rotationLen);
+                for (int i=0;i<arrLen;i++){
+        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
+ 
+    	}
     for (int i=0;i<arrLen;i++){
     	if (source[i]!=target[i]){
-        return -1;
+            return -1;
     	}
     }
+    for (int i=0;i<arrLen;i++){
+        src[i]=src_0[i];//copying original array to vector
+        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
+        tgt[i]=tgt_0[i];
+    	}
+    
+    for(int i=arrLen-1;i>-1;i--){
+        while (src[i]!=tgt[i])
+        {
+            for(int j=0;j<=i;j++){
+                swapAndRecord(src,arrLen,i,j,rotations,rotationLen);    
+                cout<<rotations[j]<<","<<endl;
 
+                if(src[j]!=tgt[j])
+                 swapAndRecord(src,arrLen,i,j,rotations,rotationLen);    
+
+
+            }
+        }
+        
+    }
+     for (int i=0;i<arrLen;i++){
+
+        cout<<"src"<<i<<"="<<src[i]<<","<<source[i]<<endl;
+
+    	}
+       
+    /*
+    source=src;
+    rotate(src,arrLen,1);
+    rotations[rotationLen]=1;
+    rotationLen++;
+    rotate(src,arrLen,2);
+    rotations[rotationLen]=2;
+    rotationLen++;    rotate(src,arrLen,1);
+    rotations[rotationLen]=1;
+    rotationLen++;*/
     return 0;
     // End of Task 4 TODO
 }
