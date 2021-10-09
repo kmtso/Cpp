@@ -53,6 +53,7 @@ void v_flip(const char s[][NUM_COL_MAX+1], int num_row, int num_col, char v_flip
 void hv_flip(const char s[][NUM_COL_MAX+1], int num_row, int num_col, char hv_flipped[][NUM_COL_MAX+1], int size[2]){ /* horizontal and vertical flip */
     // Task 3: horizontal and vertical flips of the 2D array, concatenate with the original 2D array
     // Please fill in your code here
+    
      for (int i = 0; i < size[0]; i++ ){
         for (int j = 0; j < size[1]; j++ )
             cout << s[i][j];
@@ -74,7 +75,39 @@ int initialize_self_defined_2D_array(char s[][NUM_COL_MAX+1], int num_row){/* in
     // Task 4: initialize any self-defined 2D array by typing to terminal
     // The user should type line-by-line.
     // Please fill in your code here
-    return 0;
+
+    int index=0;
+    char str[NUM_COL_MAX+1];
+    int size=0;
+
+    //cout<<"num of row"<<num_row;
+    cin.getline(str,sizeof(str),'\n');
+    do{
+
+        cin.getline(s[index],NUM_COL_MAX+1,'\n');
+        cin.clear();
+        if(strlen(s[index])>size){
+            size=strlen(s[index]);
+         //   cout<<"size"<<size;
+        }
+/*      
+        cin.getline(str,sizeof(str),'\n');
+            /*if(sizeof(str)>size){
+            size=sizeof(str);        cout<<str<<endl;
+        cout<<sizeof(str)<<endl;
+        }*/     
+  
+
+
+
+        index++;
+
+    }while(index<num_row);
+    for(int i=0;i<num_row;i++)
+        for(int j=0;j<size;j++)
+            if(s[i][j]!='\0'&&j+1>size)
+                size=j+1;
+    return size;
 }
 
 int main(){  
@@ -173,7 +206,7 @@ int main(){
             cout << endl << "Task 3: Horizontal Flip & Vertical Flip & Concatenate:" << endl;
             char hv_flipped[NUM_ROW_MAX][NUM_COL_MAX+1];
             hv_flip(s, num_row, num_col, hv_flipped, size);
-            print_2D_array(hv_flipped, size);
+            //print_2D_array(hv_flipped, size);
         }
     } 
     while (reply != 5);
