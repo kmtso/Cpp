@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstring>
 using namespace std;	
@@ -23,60 +22,72 @@ void initialize_2D_array(char s[][NUM_COL_MAX+1]){
 void h_flip(const char s[][NUM_COL_MAX+1], int num_row, int num_col, char h_flipped[][NUM_COL_MAX+1], int size[2]){ /* horizontal flip */
     // Task 1: horizontal flip of the 2D array, concatenate with the original 2D array
     // Please fill in your code here
+        int image_col_num=size[1];
     for (int i = 0; i < size[0]; i++ ){
-        for (int j = 0; j < size[1]; j++ )
-            cout << s[i][j];
-        for(int k=size[1]-1;k>-1;k--)//print with the same line
-            cout<<s[i][k];
-            
-            
-        cout << endl;  
+        int image_col_num=size[1];
+        for ( int j=0; j < size[1]; j++ )
+            h_flipped[i][j]=s[i][j];
+        for(int k=size[1]-1;k>-1;k--){
+            h_flipped[i][image_col_num]=s[i][k];
+            image_col_num++;
+            }
+
     }
+    size[1]*=2;
 }
 
 void v_flip(const char s[][NUM_COL_MAX+1], int num_row, int num_col, char v_flipped[][NUM_COL_MAX+1], int size[2]){ /* vertical flip */
     // Task 2: vertial flip of the 2D array, concatenate with the original 2D array
     // Please fill in your code here
+    int image_row_num=size[0];
     for (int i = 0; i < size[0]; i++ ){
         for (int j = 0; j < size[1]; j++ )
-            cout << s[i][j];
-        cout << endl;  
+            v_flipped[i][j]=s[i][j];
     }  
 
     for (int i = size[0]-1; i >-1; i-- ){
+            
         for (int j =0; j < size[1]; j++ )
-            cout << s[i][j];
-        cout << endl;  
-    }      
+            v_flipped[image_row_num][j]= s[i][j];
+            image_row_num++;
+    }    
+    size[0]*=2;      
 }
 
 void hv_flip(const char s[][NUM_COL_MAX+1], int num_row, int num_col, char hv_flipped[][NUM_COL_MAX+1], int size[2]){ /* horizontal and vertical flip */
     // Task 3: horizontal and vertical flips of the 2D array, concatenate with the original 2D array
     // Please fill in your code here
+        int image_col_num=size[1];
+    int image_row_num=size[0]/2;
     
-     for (int i = 0; i < size[0]; i++ ){
-        for (int j = 0; j < size[1]; j++ )
-            cout << s[i][j];
-        for(int k=size[1]-1;k>-1;k--)//print with the same line
-            cout<<s[i][k];
-        cout << endl;  
+    for (int i = 0; i < size[0]/2; i++ ){
+        image_col_num=size[1]/2;
+        for ( int j=0; j < size[1]; j++ )
+            hv_flipped[i][j]=s[i][j];
+        for(int k=size[1]/2-1;k>-1;k--){
+            hv_flipped[i][image_col_num]=s[i][k];
+            image_col_num++;
+            }
     }
 
-    for (int i = size[0]-1; i >-1; i-- ){
-        for (int j =0; j < size[1]; j++ )
-            cout << s[i][j];
-        for(int k=size[1]-1;k>-1;k--)//print with the same line
-            cout<<s[i][k];
-        cout << endl;  
-    }    
+
+    for (int i = size[0]/2-1; i >-1; i-- ){
+         image_col_num=size[1]/2;
+        for (int j =0; j < size[1]/2; j++ )
+            hv_flipped[image_row_num][j]= s[i][j];
+           
+        for(int k=size[1]/2-1;k>-1;k--){
+            hv_flipped[image_row_num][image_col_num]=s[i][k];
+            image_col_num++;}
+             image_row_num++; 
+    }     
 }
 
 int initialize_self_defined_2D_array(char s[][NUM_COL_MAX+1], int num_row){/* initialize the self-defined 2D array */
     // Task 4: initialize any self-defined 2D array by typing to terminal
     // The user should type line-by-line.
     // Please fill in your code here
-
-    int index=0;
+     int index=0;
     char str[NUM_COL_MAX+1];
     int size=0;
 
@@ -88,26 +99,11 @@ int initialize_self_defined_2D_array(char s[][NUM_COL_MAX+1], int num_row){/* in
         cin.clear();
         if(strlen(s[index])>size){
             size=strlen(s[index]);
-         //   cout<<"size"<<size;
         }
-/*      
-        cin.getline(str,sizeof(str),'\n');
-            /*if(sizeof(str)>size){
-            size=sizeof(str);        cout<<str<<endl;
-        cout<<sizeof(str)<<endl;
-        }*/     
-  
-
-
-
         index++;
 
     }while(index<num_row);
-    for(int i=0;i<num_row;i++)
-        for(int j=0;j<size;j++)
-            if(s[i][j]!='\0'&&j+1>size)
-                size=j+1;
-    return size;
+    return size;  
 }
 
 int main(){  
@@ -206,7 +202,7 @@ int main(){
             cout << endl << "Task 3: Horizontal Flip & Vertical Flip & Concatenate:" << endl;
             char hv_flipped[NUM_ROW_MAX][NUM_COL_MAX+1];
             hv_flip(s, num_row, num_col, hv_flipped, size);
-            //print_2D_array(hv_flipped, size);
+            print_2D_array(hv_flipped, size);
         }
     } 
     while (reply != 5);
