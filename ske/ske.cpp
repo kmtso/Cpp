@@ -4,16 +4,18 @@
 #include <sstream>
 #include <algorithm>
 #include <cstring>
+#include <vector>
 using namespace std;
 #define MAX_NUM_STU 20
 
 // TASK1: Merge two files into a new file.
 void mergeFile(const string ip_filename1, const string ip_filename2, const string op_filename){
     ifstream ifs; ifs.open(ip_filename1);
-    ifstream ifs2; ifs2.open(ip_filename1);
+    ifstream ifs2; ifs2.open(ip_filename2);
     ofstream ofs; ofs.open(op_filename);
     
-    ofs<<ifs.rdbuf()<<ifs2.rdbuf();
+    ofs<<ifs.rdbuf()<<'\n'<<ifs2.rdbuf();
+
     /*
     char c; ifs.get(c); // Try to get the first char
     while (!ifs.eof()) // Check if EOF is reached
@@ -41,14 +43,20 @@ void cleanFile(const string ip_filename, const string op_filename){
     stringstream buf;
     string str;
     string special_sym;
+    vector <string> arr;
+        vector <string> NotEmptyarr;
 
     string temp="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
     const int MAX_SIZE = 128;
     int intArr[20]; // An integer array
-    char *strArr[20];
+    string strArr[20];
     char *totStrArr[40];
     int integer;
     string s;
+    int EvenIndex=0;
+    int oddIndex=0;
+    int index=0; 
+    do{
     getline(ifs,s);
         s.erase(remove_if(s.begin(), s.end(),
                         [&temp](const char &c) {
@@ -56,38 +64,62 @@ void cleanFile(const string ip_filename, const string op_filename){
                         }),
                         s.end());
     stringstream ss(s);
-    int index=0;
-    while(getline(ss, str,' ')){ cout<<str;
+   if(index%2==0){
+        
+    }
+    while(getline(ss, str,' ')){ //cout<<str;
+            if(str=="")
+                continue;
+            arr.push_back(str);
+        cout<< arr[index]<<","<<index<<endl;
+        /*
+    for(int i=0;i<arr.size();i++){
+            if (arr[i]!=""){
+                NotEmptyarr.push_back(arr[i]);
+
+            }
+       }*/
+    if(index%2==1){
+        ofs<<arr[index-1]<<' '<< arr[index]<<endl;   
+    }
+       /*if (index%2!=0){
+            stringstream is(str);
+            int i;
+            is>>i;
+            intArr[oddIndex]=i;
+            oddIndex++;
+
+        }
+        //cout<< arr[EvenIndex];
         /*strcpy(totStrArr[index],str.c_str());
        cout << totStrArr[index];
-      
-       index++;*/
+      */
 
-    }     
-    
+       EvenIndex+=2;
+        index++;
+    }     }while (!ifs.eof());        
+        for(int i=1; i<arr.size();i+=2){
 
-    for(int i=0; i<str.length();i++)
+            //intArr[i]=stoi(arr[2+i]);//stoi string to int
+            //cout<<intArr[i]<<endl;
+            //strArr[i]=arr[i];
+            //cout<<strArr[i]<<endl;
+            //ofs<<strArr[i];
+        }/*
         for(int j=0; j<temp.length();j++){
         }
-    cout<<s;
-    buf << str;
+            for(int i=1;i<NotEmptyarr.size();i++){
+              ofs<<NotEmptyarr[index-1]<<' '<< NotEmptyarr[index]<<endl;   
+            }
+       
+   // cout<<s;
+   // buf << str;
     /*while(buf.eof()){
         buf>>temp;
                 if (stringstream(temp) >> integer)
             cout << integer << " ";
             temp="";
     }*/
-    while (!ifs.eof()) // Check if EOF is reached
-    {
-    getline(ifs,str);
-    buf << str;
-    while(buf.eof()){
-        buf>>temp;
-                if (stringstream(temp) >> integer)
-            cout << integer << " ";
-            temp="";
-    }
-    }
     ifs.close();
     ofs.close();
 
