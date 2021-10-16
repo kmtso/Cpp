@@ -40,21 +40,11 @@ void mergeFile(const string ip_filename1, const string ip_filename2, const strin
 void cleanFile(const string ip_filename, const string op_filename){
     ifstream ifs; ifs.open(ip_filename);
     ofstream ofs; ofs.open(op_filename);
-    stringstream buf;
     string str;
-    string special_sym;
     vector <string> arr;
-        vector <string> NotEmptyarr;
-
     string temp="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ";
-    const int MAX_SIZE = 128;
-    int intArr[20]; // An integer array
-    string strArr[20];
-    char *totStrArr[40];
-    int integer;
     string s;
-    int EvenIndex=0;
-    int oddIndex=0;
+
     int index=0; 
     do{
     getline(ifs,s);
@@ -67,59 +57,19 @@ void cleanFile(const string ip_filename, const string op_filename){
    if(index%2==0){
         
     }
-    while(getline(ss, str,' ')){ //cout<<str;
+    while(getline(ss, str,' ')){
             if(str=="")
                 continue;
             arr.push_back(str);
-        cout<< arr[index]<<","<<index<<endl;
-        /*
-    for(int i=0;i<arr.size();i++){
-            if (arr[i]!=""){
-                NotEmptyarr.push_back(arr[i]);
+        //cout<< arr[index]<<","<<index<<endl;
 
-            }
-       }*/
     if(index%2==1){
         ofs<<arr[index-1]<<' '<< arr[index]<<endl;   
     }
-       /*if (index%2!=0){
-            stringstream is(str);
-            int i;
-            is>>i;
-            intArr[oddIndex]=i;
-            oddIndex++;
-
-        }
-        //cout<< arr[EvenIndex];
-        /*strcpy(totStrArr[index],str.c_str());
-       cout << totStrArr[index];
-      */
-
-       EvenIndex+=2;
         index++;
     }     }while (!ifs.eof());        
         for(int i=1; i<arr.size();i+=2){
-
-            //intArr[i]=stoi(arr[2+i]);//stoi string to int
-            //cout<<intArr[i]<<endl;
-            //strArr[i]=arr[i];
-            //cout<<strArr[i]<<endl;
-            //ofs<<strArr[i];
-        }/*
-        for(int j=0; j<temp.length();j++){
         }
-            for(int i=1;i<NotEmptyarr.size();i++){
-              ofs<<NotEmptyarr[index-1]<<' '<< NotEmptyarr[index]<<endl;   
-            }
-       
-   // cout<<s;
-   // buf << str;
-    /*while(buf.eof()){
-        buf>>temp;
-                if (stringstream(temp) >> integer)
-            cout << integer << " ";
-            temp="";
-    }*/
     ifs.close();
     ofs.close();
 
@@ -128,12 +78,32 @@ void cleanFile(const string ip_filename, const string op_filename){
 // TASK3: Analyze a file, that is, to find the two students who have got the lowest and the highest grade, respectively.
 // If two or more students got the same lowest/highest grade, you only need to return the first-appeared ones.
 void analyzeFile(const string filename, string &low_name, string &high_name, int &low_grade, int &high_grade){
-    
-    const int MAX_SIZE = 128;
-    int x[MAX_SIZE]; // An integer array
-    char ip_file[32]; // Input filename
-
     ifstream ifs; ifs.open(filename);
+    string line;
+            int low_temp=100;
+            int high_temp=0;
+            while (!ifs.eof())
+        {
+            getline(ifs,line);
+            string name;
+            int grade;    
+            stringstream ss;
+
+            ss.str(line);
+            ss >> name >> grade;
+            if(grade>high_temp){
+                high_grade=grade;
+                high_name=name;
+                high_temp=grade;
+            }
+            if (grade<low_temp){
+                low_grade=grade;
+                low_name=name;
+                low_temp=grade;
+            }
+            
+
+        }
     ifs.close();
 
 }
