@@ -1,16 +1,16 @@
 /*
  * COMP2011 (Fall 2021) Programming Assignment 1
  *
- * Student name: FILL YOUR NAME HERE
- * Student ID: FILL YOUR STUDENT ID NUMBER HERE
- * Student email: FILL YOUR EMAIL HERE
+ * Student name: TSO KEI MING
+ * Student ID: 20791992
+ * Student email: kmtso@ust.hk
  *
  */
 
 #include <iostream>
 #include <limits>
-#include<algorithm>
-#include<vector>
+//#include<algorithm>
+//#include<vector>
 
 using namespace std;
 
@@ -40,9 +40,21 @@ int rotate(int arr[], int arrLen, int k)
         return -1;
     }
     else{
+        int startIn=0;
+        int endIn=k;
     //for(int i=0; i<arrLen; i++){
     //    arr[i]=arr_o[k-i];
-        reverse(arr,arr+(k+1));
+    //    reverse(arr,arr+(k+1));
+        while (endIn>startIn)
+        {
+            int temp=arr[startIn];
+            arr[startIn]=arr[endIn];
+            arr[endIn]=temp;
+            startIn++;
+            endIn--;
+        }
+        
+        
         return 0;
     }
 
@@ -177,7 +189,8 @@ void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
     
     // Task 3 TODO
     bool swapped=false;
-    vector<int>digits;
+    int digits[MAX_ROTATIONS]={};
+    int count=0;
     do{
         swapped=false;
         for(int i=0;i< arrLen-1;i++){
@@ -185,15 +198,16 @@ void sortAndRecord(int arr[], int arrLen, int rotations[], int &rotationLen)
                 swapAndRecord(arr,arrLen,i,i+1,rotations,rotationLen);
                 for(int j=0; j<rotationLen;j++){
                     //cout<<rotations[j]<<","<<endl;
-                    digits.push_back(rotations[j]);
+                    digits[count]=rotations[j];
+                    count++;
                 }
                 swapped=true;
             }
         
             }}while (swapped);
-    rotationLen=digits.size();
+    rotationLen=count;
     for (int i=0; i<rotationLen;i++){
-        rotations[i]=digits[i];
+            rotations[i]=digits[i];
     }
     // End of Task 3 TODO
 }
@@ -205,12 +219,16 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
     int* source=src;
     int* target=tgt;
     bool swapped=false;
-    vector<int>src_0;
-    vector<int>tgt_0;    vector<int>digits;
+    int src_0[MAX_ARR_LEN];
+    int tgt_0[MAX_ARR_LEN];
+    int digits[MAX_ROTATIONS];
+    int count=0;
+    //vector<int>src_0;
+   // vector<int>tgt_0;    vector<int>digits;
 
     for (int i=0;i<arrLen;i++){
-        src_0.push_back(src[i]);//copying original array to vector
-        tgt_0.push_back(tgt[i]);
+        src_0[i]=src[i];//copying original array to vector
+        tgt_0[i]=tgt[i];
     	}/*
         do{
             swapped=false;
@@ -259,18 +277,20 @@ int transformAndRecord(int src[], int tgt[], int arrLen, int rotations[], int &r
                  //cout<<rotations[j]<<","<<endl;
                 for(int j=0; j<rotationLen;j++){
                     //cout<<rotations[j]<<","<<endl;
-                    digits.push_back(rotations[j]);
+                    digits[count]=rotations[j];
+                    count++;
                 }
                 if(src[j]!=tgt[j]){
                  swapAndRecord(src,arrLen,i,j,rotations,rotationLen);    
                 for(int j=0; j<rotationLen;j++){
                     //cout<<rotations[j]<<","<<endl;
-                    digits.push_back(rotations[j]);
+                    digits[count]=rotations[j];
+                    count++;
                 }
                 }
             }
         }
-        rotationLen=digits.size();
+        rotationLen=count;
     for (int i=0; i<rotationLen;i++){
         rotations[i]=digits[i];
     }    
