@@ -42,7 +42,37 @@ void bubbleSort(double arr[], int n, bool ascending)
 /* Task Two */
 void bubbleSort(char arr[][MAX_ARRAY_LENGTH+1], int n, bool ascending)
 {
+       bool swapped=false;
+       bool swapped2=false;
+       int arrLen=n;
+       char temp[MAX_ARRAY_LENGTH+1];
+       if (ascending){
 
+            for(int i=0;i< arrLen-1;i++){
+               for(int j=i+1;j< arrLen;j++){
+                  if (strcmp(arr[i], arr[j]) > 0){
+                        strcpy(temp, arr[j]);
+                        strcpy(arr[j], arr[i]);
+                        strcpy(arr[i], temp);
+                     }
+               }
+            }
+
+
+      }else{
+
+                     for(int i=0;i< arrLen-1;i++){
+                        for(int j=i+1;j< arrLen;j++){
+                           if (strcmp(arr[i], arr[j]) < 0){
+                                 strcpy(temp, arr[j]);
+                                 strcpy(arr[j], arr[i]);
+                                 strcpy(arr[i], temp);
+                              }
+                           
+                        }
+                     }
+
+      }
 }
 
 
