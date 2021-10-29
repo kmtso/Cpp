@@ -43,9 +43,13 @@ int findMaximumPlace(int robot_x, int robot_y, int robot_energy, int robot_full_
        if(robot_x<0||robot_y<0||robot_x>MAP_WIDTH||robot_y>MAP_HEIGHT){
         return 0;
     }else{
+       if(robot_energy==robot_full_energy){
+         result_map[robot_y][robot_x]==ROBOT;
+       }
         visit_space(robot_x,robot_y,result_map,robot_energy,robot_full_energy);//base case
          robot_energy--;
         visited_times++;
+        
     }
 
     if (robot_energy>-1&&is_visited(robot_x,robot_y,result_map)){
