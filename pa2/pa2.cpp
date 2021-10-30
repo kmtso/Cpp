@@ -16,7 +16,7 @@ using namespace std;
 // Please do all your work in this file. You just need to submit this file.
 bool is_visited(int,int, char, char);
 bool is_available(int x,int y, const char result_map[MAP_HEIGHT][MAP_WIDTH],char temp_map[MAP_HEIGHT][MAP_WIDTH]){
-   return ((y >= 0 && y <MAP_HEIGHT&&x >= 0 && x <MAP_WIDTH)&& result_map[y][x]==AVAILABLE && temp_map[y][x]!=VISITED);
+   return ((y >= 0 && y <MAP_HEIGHT&&x >= 0 && x <MAP_WIDTH)&& result_map[y][x]==AVAILABLE||result_map[y][x]==CHARGER && temp_map[y][x]!=VISITED);
    /*if(result_map[y][x]==AVAILABLE){
       return true;
    }else{ return false;}
@@ -59,9 +59,15 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
          return;
          }
    }//if(robot_x!=target_x &&robot_y !=target_y&&(robot_energy==0)){min_distance=PA2_MAX_PATH};
+         if(map[robot_y][robot_x]==CHARGER){
+            robot_energy=robot_full_energy;
+            
+         }
    temp_map[robot_y][robot_x]=VISITED;
    //robot_energy--;
    //cout<<min_distance<<","<<distance;
+   
+
    if (robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)){
       findShortestPath(robot_x,robot_y-1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1);
    }
@@ -75,7 +81,7 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
       findShortestPath(robot_x-1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1);
    }
    temp_map[robot_y][robot_x]=AVAILABLE;
-   
+
 }
 
 int findMaximumPlace(int robot_x, int robot_y, int robot_energy, int robot_full_energy, char result_map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]);
