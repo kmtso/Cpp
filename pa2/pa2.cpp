@@ -56,12 +56,13 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
    if(robot_x==target_x &&robot_y ==target_y){
       if (min_distance>=distance)
          {min_distance=distance;
+         //printMap(temp_map);
+
          return;
          }
    }//if(robot_x!=target_x &&robot_y !=target_y&&(robot_energy==0)){min_distance=PA2_MAX_PATH};
          if(map[robot_y][robot_x]==CHARGER){
             robot_energy=robot_full_energy;
-            
          }
    temp_map[robot_y][robot_x]=VISITED;
    //robot_energy--;
@@ -70,6 +71,7 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
 
    if (robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)){
       findShortestPath(robot_x,robot_y-1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1);
+
    }
 
       if (robot_energy>0&&is_available(robot_x+1,robot_y,map,temp_map)){
@@ -83,7 +85,63 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
    temp_map[robot_y][robot_x]=AVAILABLE;
 
 }
+void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],int& min_distance, int distance,char result_sequence[],int can_visit,char temp_sqeunence[]){
+   if (min_distance==1 && robot_x==target_x &&robot_y ==target_y ){//robot_energy==robot_full_energy
+      printMap(temp_map);
+      strcpy(result_sequence,"T");
+      return;
+   }      
+   if((robot_x==target_x &&robot_y ==target_y)){
+     // if(strlen(temp_sqeunence)+1==min_distance)
+      {strcat(temp_sqeunence,"T");
+         printMap(temp_map);
+         strcpy(result_sequence,temp_sqeunence);
+         cout<<"result_sequence:"<<result_sequence<<strlen(result_sequence)<<endl;//<<strrchr(result_sequence,'T')
+         if(strlen(temp_sqeunence)==min_distance){
+            return;}
+            else {strcpy(temp_sqeunence,"");}
+      }
+   }
+   
+   if(can_visit==1||robot_energy==0&&(robot_x!=target_x &&robot_y !=target_y))//strlen(temp_sqeunence)>min_distance&&
+         {strcpy(temp_sqeunence,"");   
+      }
 
+         if(map[robot_y][robot_x]==CHARGER){
+            robot_energy=robot_full_energy;
+            can_visit+=robot_full_energy;
+         }
+   temp_map[robot_y][robot_x]=VISITED;
+   //robot_energy--;
+   //cout<<min_distance<<","<<distance;
+
+   if ( can_visit>1&&robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)){
+            strcat(temp_sqeunence,"U");
+findShortestPath(robot_x,robot_y-1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
+
+   }
+
+      if (can_visit>1&&robot_energy>0&&is_available(robot_x+1,robot_y,map,temp_map)){
+            strcat(temp_sqeunence,"R");
+findShortestPath(robot_x+1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
+
+   }
+      if (can_visit>1&& robot_energy>0&&is_available(robot_x,robot_y+1,map,temp_map)){   
+    strcat(temp_sqeunence,"D");
+findShortestPath(robot_x,robot_y+1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
+
+   }   if (can_visit>1&&robot_energy>0&&is_available(robot_x-1,robot_y,map,temp_map)){
+                  strcat(temp_sqeunence,"L");
+findShortestPath(robot_x-1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
+
+   }
+   
+   temp_map[robot_y][robot_x]=AVAILABLE;
+
+}
+void backtrack(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],int& min_distance, int distance){
+
+}
 int findMaximumPlace(int robot_x, int robot_y, int robot_energy, int robot_full_energy, char result_map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]);
 int findMaximumPlace(int robot_x, int robot_y, int robot_energy, int robot_full_energy, char result_map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]){
    int visited_times=0;
@@ -118,27 +176,40 @@ int findShortestDistance(int robot_x, int robot_y, int target_x, int target_y, i
       if(robot_x<0||robot_y<0||robot_x>MAP_WIDTH||robot_y>MAP_HEIGHT){
           return 0;//base case
       }
-      /*
-      if(d_y==0 && d_x==0){
-         return 1;
-      }*/
-      //temp_map[robot_y][robot_x]=VISITED;
+
       int min_distance=144;
-      /*min_distance=*/findShortestPath(robot_x,robot_y,target_x,target_y,robot_energy,robot_full_energy,map,temp_map,min_distance,1);
-      //cout<<min_distance;
+      findShortestPath(robot_x,robot_y,target_x,target_y,robot_energy,robot_full_energy,map,temp_map,min_distance,1);
+
       if(min_distance!=PA2_MAX_PATH){
          return min_distance;
       }
-      
-      /*else if(robot_energy>0 &&(d_y>=0||d_x>=0){
-         if(d_)
-        visit_space(robot_x,robot_y,result_map,robot_energy,robot_full_energy,visited_times,temp_map);
 
-      }*/
    return min_distance;
 }
 int findPathSequence(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, char result_sequence[], const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]){
-   return 0;
+   int min_distance=findShortestDistance(robot_x,robot_y,target_x,target_y,robot_energy,robot_full_energy,map,temp_map);
+   int can_visited=min_distance;
+   char temp_sqeunence[MAX_STRING_SIZE] = "";
+   findShortestPath(robot_x,robot_y,target_x,target_y,can_visited,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited,temp_sqeunence);
+
+   /*
+   if (min_distance==1 && robot_energy==robot_full_energy){
+      strcpy(result_sequence,"T");
+      return min_distance;
+   }
+   if(map[robot_y][robot_x]==CHARGER){
+      robot_energy=robot_full_energy;
+   }
+   temp_map[robot_y][robot_x]=VISITED;
+      if (robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)&&min_distance>1){
+            findShortestPath(robot_x+1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited);
+            strcat(result_sequence,"U");
+            //can_visited--;
+      }
+*/
+   //if(can_visited==1)
+   //strcat(result_sequence,"T");
+   return min_distance;
 }
 int findFarthestPossibleCharger(int robot_x, int robot_y, int robot_original_x, int robot_original_y, int &target_x, int &target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]){
    return 0;
