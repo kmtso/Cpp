@@ -48,7 +48,7 @@ int visit_space(int x,int y, char result_map[MAP_HEIGHT][MAP_WIDTH],int& robot_e
          }
          if (!is_visited(x,y,result_map)){
             result_map[y][x]='V';   visited_times++;
-            temp_map[y][x]='V';
+            //temp_map[y][x]='V';
             strcat(countV,"V");
             //cout<<visited_times<<endl;
          }
@@ -213,16 +213,16 @@ int findMaximumPlace(int robot_x, int robot_y, int robot_energy, int robot_full_
        }
         visit_space(robot_x,robot_y,result_map,robot_energy,robot_full_energy,count,countV, temp_map);
         //cout<<visited_times<<endl;
-         robot_energy--;  
+         //robot_energy--;  
         
          //strcat(countV,"V");
     }
-    if (robot_energy>-1&&is_visited(robot_x,robot_y,result_map)){//if (robot_energy==0) 
-       findMaximumPlace(robot_x,robot_y-1, robot_energy,robot_full_energy,result_map,temp_map,count);//up
-        findMaximumPlace(robot_x+1,robot_y, robot_energy,robot_full_energy,result_map,temp_map,count);//right      
+    if (robot_energy>0&&is_visited(robot_x,robot_y,result_map)){//if (robot_energy==0) 
+       findMaximumPlace(robot_x,robot_y-1, robot_energy-1,robot_full_energy,result_map,temp_map,count);//up
+        findMaximumPlace(robot_x+1,robot_y, robot_energy-1,robot_full_energy,result_map,temp_map,count);//right      
    
-       findMaximumPlace(robot_x,robot_y+1, robot_energy,robot_full_energy,result_map,temp_map,count);//down
-       findMaximumPlace(robot_x-1,robot_y, robot_energy,robot_full_energy,result_map,temp_map,count);//left
+       findMaximumPlace(robot_x,robot_y+1, robot_energy-1,robot_full_energy,result_map,temp_map,count);//down
+       findMaximumPlace(robot_x-1,robot_y, robot_energy-1,robot_full_energy,result_map,temp_map,count);//left
        
     }
     return count;
@@ -247,12 +247,13 @@ int findShortestDistance(int robot_x, int robot_y, int target_x, int target_y, i
       }
 
       int min_distance=144;
+      //cout<<robot_x<<","<<robot_y<<","<<target_x<<","<<target_y;
       findShortestPath(robot_x,robot_y,target_x,target_y,robot_energy,robot_full_energy,map,temp_map,min_distance,1);
 
       if(min_distance!=PA2_MAX_PATH){
          return min_distance;
       }
-
+   //cout<<min_distance;
    return min_distance;
 }
 int findPathSequence(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, char result_sequence[], const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]){
@@ -282,9 +283,103 @@ int findPathSequence(int robot_x, int robot_y, int target_x, int target_y, int r
    //if(can_visited==1)
    //strcat(result_sequence,"T");
    return min_distance;
+}int findFarthestPossibleCharger(int robot_x, int robot_y, int robot_original_x, int robot_original_y, int &target_x, int &target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],char result_map[MAP_HEIGHT][MAP_WIDTH], int robot_original_energy){
+   int count;
+  char countV[MAX_STRING_SIZE];
+   //cout<<findShortestDistance(robot_original_x,robot_original_y,7, 7, robot_full_energy,robot_full_energy,map,temp_map);
+            cout<<findShortestDistance(robot_original_x,robot_original_y,target_x, target_y,robot_original_energy,robot_full_energy,map,temp_map)<<"target("<<target_x<<","<<target_y<<")"<<"robot——0("<<robot_original_x<<","<<robot_original_y<<")"<<endl;
+
+   if(robot_x<0||robot_y<0||robot_x>MAP_WIDTH||robot_y>MAP_HEIGHT){
+        return -1;//base case
+    }//else{
+       if(robot_energy==robot_full_energy){
+         result_map[robot_y][robot_x]==VISITED;
+       }
+          /* code */visit_space(robot_x,robot_y,result_map,robot_energy,robot_full_energy,count,countV, temp_map);
+       
+       
+                 //cout<<"("<<robot_x<<","<<robot_y<<")";
+
+         if (map[robot_y][robot_x]==CHARGER){
+            if (target_y==-1&&target_x==-1){
+               target_x=robot_x;
+               target_y=robot_y;
+               //findShortestDistance(robot_original_x,robot_original_y,7, 7,robot_original_energy ,robot_full_energy,map,temp_map);
+         //min_distance=PA2_MAX_PATH;//findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map);
+         cout<<"robot("<<robot_x<<","<<robot_y<<")";
+                  cout<<"target("<<target_x<<","<<target_y<<")";
+
+            }
+         //cout<<target_y;
+         //cout<<findShortestDistance(robot_original_x,robot_original_y,robot_x, robot_y,robot_original_energy,robot_full_energy,map,temp_map)<<"robot("<<robot_x<<","<<robot_y<<")"<<"robot——0("<<robot_original_x<<","<<robot_original_y<<")"<<endl;
+            if (findShortestDistance(robot_original_x,robot_original_y,robot_x, robot_y, robot_original_energy,robot_full_energy,map,temp_map)>findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map)){
+               target_x=robot_x;
+               target_y=robot_y;
+            findShortestDistance(robot_original_x,robot_original_y,target_x, target_y,robot_original_energy,robot_full_energy,map,temp_map);
+            } 
+         } 
+    
+    if (robot_energy>0&&is_visited(robot_x,robot_y,result_map)){//if (robot_energy==0) 
+       findFarthestPossibleCharger(robot_x,robot_y-1,robot_original_x,robot_original_y, target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,result_map,robot_original_energy);//up
+       findFarthestPossibleCharger(robot_x+1,robot_y, robot_original_x,robot_original_y, target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,result_map,robot_original_energy);//right      
+   
+       findFarthestPossibleCharger(robot_x,robot_y+1, robot_original_x,robot_original_y, target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,result_map,robot_original_energy);//down
+       findFarthestPossibleCharger(robot_x-1,robot_y, robot_original_x,robot_original_y, target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,result_map,robot_original_energy);//left
+       
+    }
+    return findShortestDistance(robot_original_x,robot_original_y,7,7, robot_full_energy,robot_full_energy,map,temp_map);
+
 }
 int findFarthestPossibleCharger(int robot_x, int robot_y, int robot_original_x, int robot_original_y, int &target_x, int &target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH]){
-      //findMaximumPlace(robot_x,robot_y, robot_energy,robot_full_energy,map,temp_map);
+   //int min_distance=PA2_MAX_PATH;
+ //  int min_distance=findShortestDistance(robot_x,robot_y,7,7,robot_energy,robot_full_energy,map,temp_map);
+   char result_map[MAP_HEIGHT][MAP_WIDTH]={};
+   copyMap(result_map,map);
+     int robot_original_energy=robot_energy;
 
-   return 0;
+   int min_distance=findFarthestPossibleCharger(robot_x,robot_y, robot_original_x,robot_original_y, target_x,target_y,robot_energy,robot_full_energy,map,temp_map,result_map,robot_original_energy);
+   printMap(result_map);
+     /* char result_map[MAP_HEIGHT][MAP_WIDTH]={};
+      int count=0;
+      char countV[MAX_STRING_SIZE];
+      //robot_energy=robot_full_energy;
+      copyMap(result_map,map);
+      int min_distance=PA2_MAX_PATH;
+      if(robot_x<0||robot_y<0||robot_x>MAP_WIDTH||robot_y>MAP_HEIGHT){
+        return -1;//base case
+    }//else{
+       if(robot_energy==robot_full_energy){
+         result_map[robot_y][robot_x]==VISITED;
+       }
+        visit_space(robot_x,robot_y,result_map,robot_energy,robot_full_energy,count,countV, temp_map);
+        //cout<<visited_times<<endl;
+        // robot_energy--;  
+        
+         //strcat(countV,"V");
+         //if(robot_energy==0)
+          //  printMap(result_map);
+    //}
+      if (map[robot_y][robot_x]==CHARGER){
+         if (target_y==-1&&target_x==-1){
+         target_x=robot_x;
+         target_y=robot_y;
+         min_distance=findShortestPath(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map,min_distance,1);
+         //min_distance=PA2_MAX_PATH;//findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map);
+         cout<<"("<<robot_x<<","<<robot_y<<")";
+         return min_distance;
+         }
+         //cout<<target_y;
+         //cout<<findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map);
+        /* if (findShortestDistance(robot_original_x,robot_original_y,robot_x, robot_y, robot_energy,robot_full_energy,map,temp_map)>findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map)){
+            target_x=robot_x;
+            target_y=robot_y;
+            min_distance=findShortestDistance(robot_original_x,robot_original_y,target_x, target_y, robot_energy,robot_full_energy,map,temp_map);
+         }*/
+      //}
+
+
+      //findMaximumPlace(robot_x,robot_y, robot_energy,robot_full_energy,result_map,temp_map);
+
+   return min_distance;
 }
+
