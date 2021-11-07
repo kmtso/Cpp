@@ -15,6 +15,12 @@ using namespace std;
 
 // Please do all your work in this file. You just need to submit this file.
 bool is_visited(int,int, char, char);
+void pop(char* temp_squence[MAX_STRING_SIZE]){
+   char* a_squence[MAX_STRING_SIZE]={};
+   //a_squence=temp_squence;
+
+
+}
 bool is_available(int x,int y, const char result_map[MAP_HEIGHT][MAP_WIDTH],char temp_map[MAP_HEIGHT][MAP_WIDTH]){
    return ((y >= 0 && y <MAP_HEIGHT&&x >= 0 && x <MAP_WIDTH)&& result_map[y][x]==AVAILABLE||result_map[y][x]==CHARGER && temp_map[y][x]!=VISITED);
    /*if(result_map[y][x]==AVAILABLE){
@@ -95,76 +101,93 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
 //task3
 void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],int& min_distance, int distance,char result_sequence[],int can_visit,char temp_sqeunence[]){
    temp_map[robot_y][robot_x]=VISITED;
-   cout<<(temp_sqeunence)<<"\n";
+      if(robot_energy==0&&(robot_x!=target_x &&robot_y !=target_y)){//strlen(temp_sqeunence)>min_distance&&
 
-   int difference_y=target_y-robot_y;
-   int difference_x=target_x-robot_x;
+      //cout<< robot_energy;
+      //cout<<temp_sqeunence;
       if(map[robot_y][robot_x]==CHARGER){
          robot_energy=robot_full_energy;
       }
+      //if (robot_energy==0)
+        // strcpy(temp_sqeunence,"");
+   }
+      cout<<(temp_sqeunence)<<"("<<robot_x<<","<<robot_y<<")"<<"-energy remain"<<robot_energy<<"\n";
+
+if(distance==min_distance){
+
+}
+   int difference_y=target_y-robot_y;
+   int difference_x=target_x-robot_x;
+
    if (min_distance==1 && robot_x==target_x &&robot_y ==target_y ){//robot_energy==robot_full_energy
       //printMap(temp_map);
       strcpy(result_sequence,"T");
-      return;
+      //return temp_sqeunence;
    }      
    if((robot_x==target_x &&robot_y ==target_y)){
       strcat(temp_sqeunence,"T");
-      cout<<(temp_sqeunence)<<"\n";
-      cout<<distance<<"\n";            printMap(temp_map);
+      //cout<<(temp_sqeunence)<<"\n";
+      //cout<<distance<<"\n";            printMap(temp_map);
 
       if(distance==min_distance&&strlen(temp_sqeunence)==min_distance){
         // if(strlen(temp_sqeunence)+1==min_distance){
             strcpy(result_sequence,temp_sqeunence);
             cout<<"result_sequence:"<<result_sequence;//<<strlen(result_sequence)<<endl;//<<strrchr(result_sequence,'T')
-            return;
+            
+            //return temp_sqeunence;
          //if(strlen(temp_sqeunence)==min_distance){
            // return;
          }//else {strcpy(temp_sqeunence,"");}
       //}
       //}
+      return;
    }  
-   
-   if(robot_energy==0&&(robot_x!=target_x &&robot_y !=target_y)){//strlen(temp_sqeunence)>min_distance&&
 
-      //cout<< robot_energy;
-      //cout<<temp_sqeunence;
-      if (robot_energy==0)
-         strcpy(temp_sqeunence,"");
-   }
 
 
    //robot_energy--;
    //cout<<min_distance<<","<<distance;
-if (difference_y<0){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y+1,map,temp_map)&&!is_available(robot_x-1,robot_y,map,temp_map)
-   if ((robot_x!=target_x &&robot_y !=target_y)&&robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)&&!is_target(robot_x+1,robot_y,target_x,target_y)){
+      temp_map[robot_y][robot_x]=VISITED;
+//cout<<!(robot_x==target_x &&robot_y ==target_y)<<endl;
+   if(!(robot_x==target_x &&robot_y ==target_y)&&distance<min_distance){
+//if (difference_y<0){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y+1,map,temp_map)&&!is_available(robot_x-1,robot_y,map,temp_map)
+   if (robot_energy>0&&is_available(robot_x,robot_y-1,map,temp_map)){//&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)&&!is_target(robot_x+1,robot_y,target_x,target_y)){//&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)&&!is_target(robot_x+1,robot_y,target_x,target_y)
             strcat(temp_sqeunence,"U");
       findShortestPath(robot_x,robot_y-1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
 
    }
-}
-if (difference_x>0&&(difference_y<0&&is_available(robot_x+1,robot_y-1,map,temp_map)||is_available(robot_x+1,robot_y+1,map,temp_map))||difference_x>=0&&difference_y<0&&!is_available(robot_x,robot_y-1,map,temp_map)||difference_x<=0&&difference_y>0&&!is_available(robot_x-1,robot_y+1,map,temp_map)
-){//||difference_x>=0&&||!is_available(robot_x,robot_y-1,map,temp_map)&&!is_available(robot_x-1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y+1,map,temp_map)&&
+//}
 
-   if (robot_energy>0&&is_available(robot_x+1,robot_y,map,temp_map)&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)){
+//if (difference_x>0&&(difference_y<0&&is_available(robot_x+1,robot_y-1,map,temp_map)||is_available(robot_x+1,robot_y+1,map,temp_map))||difference_x>=0&&difference_y<0&&!is_available(robot_x,robot_y-1,map,temp_map)||difference_x<=0&&difference_y>0&&!is_available(robot_x-1,robot_y+1,map,temp_map)
+//){//||difference_x>=0&&||!is_available(robot_x,robot_y-1,map,temp_map)&&!is_available(robot_x-1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y+1,map,temp_map)&&
+
+   if (robot_energy>0&&is_available(robot_x+1,robot_y,map,temp_map)){//&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)){//&&!is_target(robot_x,robot_y+1,target_x,target_y)&&!is_target(robot_x-1,robot_y,target_x,target_y)
       strcat(temp_sqeunence,"R");
       findShortestPath(robot_x+1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
    }
-}
-if (difference_y>0||difference_y<0&&!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)||difference_x>0&&!is_available(robot_x+1,robot_y,map,temp_map)){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)){//&&!is_available(robot_x-1,robot_y,map,temp_map)
-   if (robot_energy>0&&is_available(robot_x,robot_y+1,map,temp_map)&&!is_target(robot_x-1,robot_y,target_x,target_y)){   
+//}
+//if (difference_y>0||difference_y<0&&!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)||difference_x>0&&!is_available(robot_x+1,robot_y,map,temp_map)){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)){//&&!is_available(robot_x-1,robot_y,map,temp_map)
+   if (robot_energy>0&&is_available(robot_x,robot_y+1,map,temp_map)){  //&&!is_target(robot_x-1,robot_y,target_x,target_y) 
       strcat(temp_sqeunence,"D");
       findShortestPath(robot_x,robot_y+1,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
 
    }  
-}
-if (difference_x<0&&(difference_y<0&&is_available(robot_x-1,robot_y-1,map,temp_map))||(difference_y>0&&is_available(robot_x-1,robot_y+1,map,temp_map))||difference_x>=0&&difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)){//||difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)||difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)&&!is_available(robot_y+1,robot_y,map,temp_map)){
+//}
+//if (difference_x<0&&(difference_y<0&&is_available(robot_x-1,robot_y-1,map,temp_map))||(difference_y>0&&is_available(robot_x-1,robot_y+1,map,temp_map))||difference_x>=0&&difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)){//||difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)||difference_y>0&&!is_available(robot_x+1,robot_y+1,map,temp_map)){//||!is_available(robot_x+1,robot_y,map,temp_map)&&!is_available(robot_x,robot_y-1,map,temp_map)&&!is_available(robot_y+1,robot_y,map,temp_map)){
 
-   if (robot_energy>0&&is_available(robot_x-1,robot_y,map,temp_map)){
+   if (robot_energy>0&&is_available(robot_x-1,robot_y,map,temp_map)){//&&!is_target(robot_x,robot_y+1,target_x,target_y)){
       strcat(temp_sqeunence,"L");
       findShortestPath(robot_x-1,robot_y,target_x,target_y,robot_energy-1,robot_full_energy,map,temp_map,min_distance,distance+1,result_sequence,can_visit-1,temp_sqeunence);
    }
-}  
+//} 
+} 
+int a=strlen(temp_sqeunence)-1;
    temp_map[robot_y][robot_x]=AVAILABLE;
+   strncpy(temp_sqeunence,temp_sqeunence,a);
+   temp_sqeunence[a]='\0';
+     //return temp_sqeunence;
+           //cout<<(temp_sqeunence)<<"("<<robot_x<<","<<robot_y<<")"<<"-energy remain"<<robot_energy<<"\n";
+
 
 }
 void backtrack(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],int& min_distance, int distance){
@@ -241,7 +264,7 @@ int findPathSequence(int robot_x, int robot_y, int target_x, int target_y, int r
    }
    int can_visited=min_distance;
    char temp_sqeunence[MAX_STRING_SIZE] = "";
-   findShortestPath(robot_x,robot_y,target_x,target_y,can_visited,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited,temp_sqeunence);
+   findShortestPath(robot_x,robot_y,target_x,target_y,can_visited-1,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited,temp_sqeunence);
 
    /*
    if (min_distance==1 && robot_energy==robot_full_energy){
