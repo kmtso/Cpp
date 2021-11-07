@@ -101,6 +101,9 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
 //task3
 void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int robot_energy, int robot_full_energy, const char map[MAP_HEIGHT][MAP_WIDTH], char temp_map[MAP_HEIGHT][MAP_WIDTH],int& min_distance, int distance,char result_sequence[],int can_visit,char temp_sqeunence[]){
    temp_map[robot_y][robot_x]=VISITED;
+         if(map[robot_y][robot_x]==CHARGER){
+         robot_energy=robot_full_energy;
+      }
       if(robot_energy==0&&(robot_x!=target_x &&robot_y !=target_y)){//strlen(temp_sqeunence)>min_distance&&
 
       //cout<< robot_energy;
@@ -111,7 +114,7 @@ void findShortestPath(int robot_x, int robot_y, int target_x, int target_y, int 
       //if (robot_energy==0)
         // strcpy(temp_sqeunence,"");
    }
-      cout<<(temp_sqeunence)<<"("<<robot_x<<","<<robot_y<<")"<<"-energy remain"<<robot_energy<<"\n";
+   //   cout<<(temp_sqeunence)<<"("<<robot_x<<","<<robot_y<<")"<<"-energy remain"<<robot_energy<<"\n";
 
 if(distance==min_distance){
 
@@ -132,15 +135,11 @@ if(distance==min_distance){
       if(distance==min_distance&&strlen(temp_sqeunence)==min_distance){
         // if(strlen(temp_sqeunence)+1==min_distance){
             strcpy(result_sequence,temp_sqeunence);
-            cout<<"result_sequence:"<<result_sequence;//<<strlen(result_sequence)<<endl;//<<strrchr(result_sequence,'T')
-            
-            //return temp_sqeunence;
-         //if(strlen(temp_sqeunence)==min_distance){
-           // return;
+            return;
          }//else {strcpy(temp_sqeunence,"");}
       //}
       //}
-      return;
+      
    }  
 
 
@@ -185,8 +184,7 @@ int a=strlen(temp_sqeunence)-1;
    temp_map[robot_y][robot_x]=AVAILABLE;
    strncpy(temp_sqeunence,temp_sqeunence,a);
    temp_sqeunence[a]='\0';
-     //return temp_sqeunence;
-           //cout<<(temp_sqeunence)<<"("<<robot_x<<","<<robot_y<<")"<<"-energy remain"<<robot_energy<<"\n";
+
 
 
 }
@@ -264,7 +262,7 @@ int findPathSequence(int robot_x, int robot_y, int target_x, int target_y, int r
    }
    int can_visited=min_distance;
    char temp_sqeunence[MAX_STRING_SIZE] = "";
-   findShortestPath(robot_x,robot_y,target_x,target_y,can_visited-1,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited,temp_sqeunence);
+   findShortestPath(robot_x,robot_y,target_x,target_y,robot_energy,robot_full_energy,map,temp_map,min_distance,1,result_sequence,can_visited,temp_sqeunence);
 
    /*
    if (min_distance==1 && robot_energy==robot_full_energy){
