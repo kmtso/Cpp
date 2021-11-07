@@ -19,7 +19,22 @@ using namespace std;
     For exmaple, a medical staff with age >=60 has priority 3 + 4 = 7
 */
 void setPriority(Person& p){
-	
+p.priority=0;
+    if(p.job=='M')
+        p.priority+=3;
+    else if(p.job=='S')
+        p.priority+=2;
+    else //if(p.job=='O')
+        p.priority+=1;
+
+    if(p.age>=60)
+        p.priority+=4;          
+    else if(p.age<60&&p.age>= 40)
+        p.priority+=3;
+    else if(p.age<40&&p.age>= 20)
+        p.priority+=2;
+    else //if(p.age<20)
+        p.priority+=1;
 }
 
 /*
@@ -35,7 +50,22 @@ void setPriority(Person& p){
     For example, pointerqueue[0] now points to the person with highest priority. 
 */
 void prioritySort( Person queue[], Person* pointerqueue[], int size) {
-   
+    for (int i=0; i<size;i++){
+        setPriority(queue[i]);
+    }
+    bool swapped;
+    Person* temp;
+         do{
+            swapped=false;
+            for(int i=0;i<size;i++){
+               if(pointerqueue[i]->priority>pointerqueue[i+1]->priority){
+                  temp=pointerqueue[i];
+                  pointerqueue[i]=pointerqueue[i+1];
+                  pointerqueue[i+1]=temp;
+                  swapped=true;
+                }
+        
+            }}while (swapped);
 }
 
 /* 
@@ -45,7 +75,12 @@ void prioritySort( Person queue[], Person* pointerqueue[], int size) {
     DO NOT remove him from the sign up queue
 */
 void vaccinateTopPriority(Person queue[], Person* pointerqueue[], int size) {
-    
+    for(int i=0;i<size;i++){
+    if (pointerqueue[i]->vaccined==true){
+        pointerqueue=NULL;
+        delete pointerqueue[i];
+    }
+    }
 }
 
 /* 
@@ -56,5 +91,10 @@ void vaccinateTopPriority(Person queue[], Person* pointerqueue[], int size) {
     This function is used when setup the initial queues from file
 */
 void addPerson(int id, const char name[], char job, int age, Person queue[], Person* pointerqueue[], int& size) {
-   
+     
+        queue[size].id=id;strcpy(queue[size].name,name);
+        queue[size].job=job;queue[size].age=age;
+        pointerqueue[size]=&queue[size];
+        
+   prioritySort(queue,pointerqueue, size);
 }
