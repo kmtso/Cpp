@@ -44,12 +44,68 @@ bool addCar(TrainCar* head, int position, CarType type, int maxLoad){
 
 bool deleteCar(TrainCar* head, int position)
 {
-    return 0;
-}
+    if(position<1||position>ll_length(head)-1)
+        return false;
+    TrainCar* prev=nullptr;
+    TrainCar* p=head;
+    for (int i = 0; 
+            i < position  &&  p->next != nullptr; 
+         p = p->next, ++i)
+         ;
+        if (p != nullptr)  // ptr is found
+    {   
+        
+        prev=p->prev;
+        //cout<<p->type;
+        prev->next = p->next;
+        //        cout<<p->type;
+        
 
-bool swapCar(TrainCar* head, int a, int b)
+    if(prev->next != nullptr)
+        prev->next->prev=prev;
+        
+        delete p;      // STEP 3: Free up the memory of the deleted item
+        //p=nullptr;
+        
+        //if(prev->next->prev != nullptr)
+      //  cout<<p->type; 
+    deallocateTrain(p);
+    //    cout<<"pointer"<<p->type; 
+
+    }
+
+    return true;
+}
+void swap(TrainCar* head, TrainCar*x, TrainCar* y)
 {
-    return 0;
+    TrainCar* temp = new TrainCar;
+    temp = x;
+    x = y;
+    y = temp;
+    delete temp;
+    temp=nullptr;
+
+}
+bool swapCar(TrainCar* head, int a, int b)
+{   
+    TrainCar* carX = new TrainCar;
+    TrainCar* carY = new TrainCar;
+
+    TrainCar* p=head;
+    for (int i = 0; 
+            i < a  &&  p->next != nullptr; 
+         p = p->next, ++i)
+         ;
+    carX=p;
+    TrainCar* p2=head;
+    for (int i = 0; 
+            i < b  &&  p2->next != nullptr; 
+         p2 = p2->next, ++i)
+         ;
+    carY=p2;
+    swap(head,carX,carY);
+
+    return 1;
 }
 
 void sortTrain(TrainCar* head, bool ascending)
@@ -81,4 +137,5 @@ TrainCar* optimizeForMaximumPossibleCargos(const TrainCar* head, int upperBound)
 
 void deallocateTrain(TrainCar* head)
 {
+    head=nullptr;
 }
