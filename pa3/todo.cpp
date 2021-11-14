@@ -76,40 +76,186 @@ bool deleteCar(TrainCar* head, int position)
 
     return true;
 }
-void swap(TrainCar* head, TrainCar*x, TrainCar* y)
+TrainCar* swap(TrainCar* head, int a, int b)
 {
-    TrainCar* temp = new TrainCar;
-    temp = x;
-    x = y;
-    y = temp;
-    delete temp;
-    temp=nullptr;
-
-}
-bool swapCar(TrainCar* head, int a, int b)
-{   
+  //      if(a<1||b<1||(a>ll_length(head)-1||b>ll_length(head)-1))
+    //    return false;
     TrainCar* carX = new TrainCar;
     TrainCar* carY = new TrainCar;
-
+    TrainCar* prev=nullptr;
     TrainCar* p=head;
     for (int i = 0; 
             i < a  &&  p->next != nullptr; 
          p = p->next, ++i)
          ;
+    prev=p->prev;
     carX=p;
+    TrainCar* prev2=nullptr;
     TrainCar* p2=head;
     for (int i = 0; 
             i < b  &&  p2->next != nullptr; 
          p2 = p2->next, ++i)
          ;
-    carY=p2;
-    swap(head,carX,carY);
+    prev2=p2->prev;
 
-    return 1;
+    carY=p2;
+    prev->next=carY;
+    prev2->next=carX;
+    TrainCar* temp=carY->next;
+    carY->next =carX->next;
+    carX->next=temp;
+    return head;
+/*
+    TrainCar* temp1 = new TrainCar;
+    TrainCar* temp2 = new TrainCar;
+    temp1=x;
+    temp2=y;
+   // y=temp1;
+   //head->next=y;
+    //temp1->prev->next=y;
+    cout<<"y:"<<y->type<<"head:"<<temp1->prev->type;
+    y->prev=x->prev;
+    y->next=x->next;
+    temp1->next->prev=y;
+   // temp1->next->prev=y;
+   // x=temp2;
+    //temp2->prev->next=temp1;
+    x->prev=temp2->prev;
+    x->next=temp2->next;
+    temp2->prev->next=x;
+cout<<"y:"<<y->type<<"head:"<<temp1->prev->type;
+    delete temp1;
+    delete temp2;
+    //temp1=nullptr;
+cout<<"y:"<<y->type<<"head:"<<temp1->prev->type;
+*/
+}
+bool swapCar(TrainCar* head, int a, int b)
+{   
+    if(a<1||b<1||(a>ll_length(head)-1||b>ll_length(head)-1))
+        return false;
+    if(b<a){
+        int temp=a;
+        a=b;
+        b=temp;
+    }
+    TrainCar* carX = new TrainCar;
+    TrainCar* carY = new TrainCar;
+    TrainCar* prev=nullptr;
+    TrainCar* p=head;
+    for (int i = 0; 
+            i < a  &&  p->next != nullptr; 
+         p = p->next, ++i)
+         ;
+    prev=p->prev;
+    carX=p;
+    TrainCar* prev2=nullptr;
+    TrainCar* p2=head;
+    for (int i = 0; 
+            i < b  &&  p2->next != nullptr; 
+         p2 = p2->next, ++i)
+         ;
+    prev2=p2->prev;
+
+    carY=p2;
+    TrainCar* carYOriginalNext=carY->next;
+    TrainCar* carXOriginalNext=carX->next;
+
+    //carY->next->prev=carX;
+    prev->next=carY;
+    //prev->next->prev=prev;
+    carXOriginalNext=carY->next;
+
+    prev2->next=carX;
+    carYOriginalNext->prev=carX->next;
+
+    //prev2->next->prev=prev2;
+
+    TrainCar* temp=carY->next;
+    //TrainCar* temp_prev=prev2;
+    carY->next =carX->next;
+    
+    carY->prev=prev;
+    carX->next=temp;
+    //temp->prev=carX;
+    //carX->prev=temp_prev;
+    carX->prev=carY;
+    //carX->prev=temp_prev;
+   // carX->prev->next=
+    //swap(head,carX,carY);
+    /*
+    p->prev->next=carY;
+    carY->prev=p->prev;
+    carY->next=p->next;*/
+    //carX->prev=p2->prev;
+    //carX->next=p2->next;
+   // p->next->prev=carY;
+   // p2->prev->next=carX;
+   //delete p;
+   //delete p2;
+    return true;
 }
 
 void sortTrain(TrainCar* head, bool ascending)
 {
+        bool swapped;
+        bool swapped2;
+    int count=1;
+    TrainCar* current = head->next;
+    TrainCar* prev=nullptr;
+
+    swapCar(head,1,4);
+    printTrain(head);
+    swapCar(head,5,1);
+    //swapCar(head,4,3);
+        if(!ascending){
+            do{
+                swapped=false;
+                current=head->next;
+                count=1;
+                //prev=nullptr;
+                while(current->next!=nullptr){
+                if(current->load<current->next->load && current->next!=nullptr){//
+                     cout<<"before"<<current->type<<"count"<<count<<endl;
+                        //cout<<<<endl;
+                        swapCar(head,count,count+1);
+                        
+                     cout<<"after"<<current->type<<endl;
+                    // printTrain(head);
+                        //cout<<"\n"<<count;
+                        swapped=true;
+                    }
+                    current=current->next;            count+=1;
+
+                }  //ptr=current;//current->next=nullptr;
+                //cout<<"\n"<<count;
+            }while (swapped);
+        }else
+        {
+            do{
+                swapped2=false;
+                current=head->next;
+                count=1;
+                //prev=nullptr;
+                while(current->next!=nullptr){
+                if((current->load)>(current->next->load&&current->next!=nullptr)){//
+                     cout<<"before"<<current->type<<"count"<<count<<endl;
+                        //cout<<<<endl;
+                        swapCar(head,count,count+1);
+                        
+                     cout<<"after"<<current->type<<endl;
+                     
+                     printTrain(head);
+                        cout<<"\n"<<count;
+                        swapped2=true;
+                    }
+                    current=current->next;            count+=1;
+
+                }  //ptr=current;//current->next=nullptr;
+                //cout<<"\n"<<count;
+            }while (swapped2);            
+        }
+        
 }
 
 bool load(TrainCar* head, CarType type, int amount)
