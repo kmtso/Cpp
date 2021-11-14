@@ -135,28 +135,24 @@ void reverse(TrainCar* head){
         TrainCar *pre = nullptr, *next =nullptr;
  int index=0;
         while (current != nullptr) {
-            // Store next
-           // pre = current;
-
-            //next = current->next;
-            //cout<<next->type;
-            // Reverse current node's pointer
-            //next->prev=pre;
-            
-            if(current->next!=nullptr&&index<ll_length(head)-1)//
+        
+            if(current->next!=nullptr)//&&index<ll_length(head)-1)//
                 current->next->prev=current;
+                
             else
                 {current->prev=pre;
-                cout<<"pretype"<<pre->type;
+                //cout<<"currenttype"<<current->type<<"\n";
+                //cout<<"pretype"<<pre->type;
                 }
+                
             //current->next = pre;
  
             // Move pointers one position ahead.
             pre = current;
-            current = current->next;
+            current = current->next;//printTrain(head);
         }
        // head = pre;
-       //printTrain(head);
+       
 }
 bool swapCar(TrainCar* head, int a, int b)
 {   
@@ -186,7 +182,7 @@ bool swapCar(TrainCar* head, int a, int b)
     prev2=p2->prev;
 
     carY=p2;
-    cout<<"initial Y"<< carY->type;
+  //  cout<<"initial Y"<< carY->type;
     TrainCar* carYOriginalNext=carY->next;
     TrainCar* carXOriginalNext=carX->next;
 
@@ -208,8 +204,8 @@ bool swapCar(TrainCar* head, int a, int b)
     //printTrain(head);
     //carY->prev=prev;
     carX->next=temp; //X car next change to original Y car next
-    cout<< carX->type<< carX->next<<endl;
-    printTrain(head);
+    //cout<< carX->type<< carX->next<<endl;
+    //printTrain(head);
     //carX->prev=temp_prev;
     reverse(head);
     //temp->prev=carX;
@@ -240,8 +236,8 @@ void sortTrain(TrainCar* head, bool ascending)
     TrainCar* prev=nullptr;
 
     //swapCar(head,1,4);
-    printTrain(head);
-    swapCar(head,5,1);
+   // printTrain(head);
+   // swapCar(head,5,1);
     //swapCar(head,4,3);
         if(ascending=false){
             do{
@@ -251,16 +247,16 @@ void sortTrain(TrainCar* head, bool ascending)
                 //prev=nullptr;
                 while(current->next!=nullptr){
                 if(current->load<current->next->load && current->next!=nullptr){//
-                     cout<<"before"<<current->type<<"count"<<count<<endl;
+                     //cout<<"before"<<current->type<<"count"<<count<<endl;
                         //cout<<<<endl;
                         swapCar(head,count,count+1);
                         
-                     cout<<"after"<<current->type<<endl;
+                     //cout<<"after"<<current->type<<endl;
                     // printTrain(head);
                         //cout<<"\n"<<count;
                         swapped=true;
-                    }
-                    current=current->next;            count+=1;
+                    }if(current->next!=nullptr)
+                    current=current->next;         count+=1;
 
                 }  //ptr=current;//current->next=nullptr;
                 //cout<<"\n"<<count;
@@ -276,19 +272,22 @@ void sortTrain(TrainCar* head, bool ascending)
                 if(!((current->load)<(current->next->load))&&current->next!=nullptr){//
                    //  cout<<"before"<<current->type<<"count"<<count<<endl;
                         //cout<<<<endl;
+                        //cout<<current
                         swapCar(head,count,count+1);
-                        
+                        swapped2=true;
                      //cout<<"after"<<current->type<<endl;
                      
-                   //  printTrain(head);
+                     printTrain(head);
                      //   cout<<"\n"<<count;
-                        swapped2=true;
-                    }
+                        
+                    }if(current->next!=nullptr)
                     current=current->next;            count+=1;
 
                 }  //ptr=current;//current->next=nullptr;
                 //cout<<"\n"<<count;
-            }while (swapped2);            
+
+                cout<<swapped2<<endl;
+            }while (swapped2==true);            
         }
         
 }
