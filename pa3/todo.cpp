@@ -130,6 +130,34 @@ cout<<"y:"<<y->type<<"head:"<<temp1->prev->type;
 cout<<"y:"<<y->type<<"head:"<<temp1->prev->type;
 */
 }
+void reverse(TrainCar* head){
+        TrainCar* current = head;
+        TrainCar *pre = nullptr, *next =nullptr;
+ int index=0;
+        while (current != nullptr) {
+            // Store next
+           // pre = current;
+
+            //next = current->next;
+            //cout<<next->type;
+            // Reverse current node's pointer
+            //next->prev=pre;
+            
+            if(current->next!=nullptr&&index<ll_length(head)-1)//
+                current->next->prev=current;
+            else
+                {current->prev=pre;
+                cout<<"pretype"<<pre->type;
+                }
+            //current->next = pre;
+ 
+            // Move pointers one position ahead.
+            pre = current;
+            current = current->next;
+        }
+       // head = pre;
+       //printTrain(head);
+}
 bool swapCar(TrainCar* head, int a, int b)
 {   
     if(a<1||b<1||(a>ll_length(head)-1||b>ll_length(head)-1))
@@ -158,28 +186,35 @@ bool swapCar(TrainCar* head, int a, int b)
     prev2=p2->prev;
 
     carY=p2;
+    cout<<"initial Y"<< carY->type;
     TrainCar* carYOriginalNext=carY->next;
     TrainCar* carXOriginalNext=carX->next;
 
     //carY->next->prev=carX;
-    prev->next=carY;
+    prev->next=carY; //original X position previous next element is carY
     //prev->next->prev=prev;
-    carXOriginalNext=carY->next;
-
-    prev2->next=carX;
-    carYOriginalNext->prev=carX->next;
+    
+   // carXOriginalNext->prev=carY;
+    //prev->next->prev=prev2;
+    prev2->next=carX; //original previous next element is carx
+    //carYOriginalNext->prev=carX;
 
     //prev2->next->prev=prev2;
 
-    TrainCar* temp=carY->next;
-    //TrainCar* temp_prev=prev2;
-    carY->next =carX->next;
-    
-    carY->prev=prev;
-    carX->next=temp;
-    //temp->prev=carX;
+    TrainCar* temp=carY->next; //store orignal Y car next
+    //TrainCar* temp_prev=carY->prev;
+    carY->next =carX->next; //Y car next change to X car next
+    //carY->prev= carX->prev;
+    //printTrain(head);
+    //carY->prev=prev;
+    carX->next=temp; //X car next change to original Y car next
+    cout<< carX->type<< carX->next<<endl;
+    printTrain(head);
     //carX->prev=temp_prev;
-    carX->prev=carY;
+    reverse(head);
+    //temp->prev=carX;
+    //carX->next->prev=temp->prev;
+  //  carX->prev=temp_prev;
     //carX->prev=temp_prev;
    // carX->prev->next=
     //swap(head,carX,carY);
@@ -204,11 +239,11 @@ void sortTrain(TrainCar* head, bool ascending)
     TrainCar* current = head->next;
     TrainCar* prev=nullptr;
 
-    swapCar(head,1,4);
+    //swapCar(head,1,4);
     printTrain(head);
     swapCar(head,5,1);
     //swapCar(head,4,3);
-        if(!ascending){
+        if(ascending=false){
             do{
                 swapped=false;
                 current=head->next;
@@ -238,15 +273,15 @@ void sortTrain(TrainCar* head, bool ascending)
                 count=1;
                 //prev=nullptr;
                 while(current->next!=nullptr){
-                if((current->load)>(current->next->load&&current->next!=nullptr)){//
-                     cout<<"before"<<current->type<<"count"<<count<<endl;
+                if(!((current->load)<(current->next->load))&&current->next!=nullptr){//
+                   //  cout<<"before"<<current->type<<"count"<<count<<endl;
                         //cout<<<<endl;
                         swapCar(head,count,count+1);
                         
-                     cout<<"after"<<current->type<<endl;
+                     //cout<<"after"<<current->type<<endl;
                      
-                     printTrain(head);
-                        cout<<"\n"<<count;
+                   //  printTrain(head);
+                     //   cout<<"\n"<<count;
                         swapped2=true;
                     }
                     current=current->next;            count+=1;
