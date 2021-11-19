@@ -323,9 +323,9 @@ bool load(TrainCar* head, CarType type, int amount)
             
     return 1;
 }
-TrainCar* rev_search(TrainCar* tail, CarType type)
+TrainCar* rev_search(TrainCar* tail, CarType type, int& count)
 {
-    for (TrainCar* p = tail->prev; p != nullptr; p = p->prev)
+    for (TrainCar*p=tail; p!=nullptr; p = p->prev)
     {
         //printTrain(p);
 
@@ -337,24 +337,6 @@ TrainCar* rev_search(TrainCar* tail, CarType type)
             }
         }   
     }
-    return nullptr;
-   /*
-       for (TrainCar* p = head; p != nullptr; p = p->next)
-    {
-
-        if (p->type == type)
-            {if(p->load==0||count>1){
-                //cout<<"true:"<<p->maxLoad;
-                continue;}
-            if(p->load>0){
-                //cout<<"return true:"<<p->maxLoad;
-                return p;
-            }
-        }   
-        }   // printTrain(p);
-
-    }
-    return nullptr; */
     return nullptr;
 }
 bool unload(TrainCar* head, CarType type, int amount)
@@ -368,87 +350,137 @@ bool unload(TrainCar* head, CarType type, int amount)
     for (int i = 0; 
         i < b  &&  p->next != nullptr; 
     p = p->next, ++i)
-            cout<<p->next->prev->type;
-            printTrain(p);
 ; 
 
-            printTrain(p);
-
-cout<<p->prev->type;
-            //printTrain(p);
-cout<<current->type;
-   // TrainCar* prev=p;
-    //cout<<p->next->prev->type;
 
     while(current->next!=nullptr){
-        if(current->next->type==type){
+        if(current->next->type==type&&current->next->load>0){
             count++;
         }if(current->next!=nullptr)
             current=current->next;
     } 
-    do{        TrainCar* car=rev_search(p,type);
+    do{        TrainCar* car=rev_search(p,type,count);
 
        // cout<<"cartype"<<car->type<<"carload"<<car->load;
-        if (car==nullptr||(count==1&&car->maxLoad<request))
-            return false;
-        if (request<car->load)
+        if ((car==nullptr||count==1&&car->load<request))//car==nullptr||
+
+           return false;
+        
+        if (request<=car->load)
             car->load=car->load-request;
-        else if(!(car->load<request)){
+        else if(car->load<request){
+            if(car->load>0)
             request=request-car->load;
             car->load=0;
         //printTrain(head);
-        }
+        }//else{
+        //    return false;
+       //}
        // cout<<count;
         count--;
         //if(count>0)
 
     }while(count>0); 
-/*
-    int unload_amount=amount;
-    TrainCar* current = head;
-    //
-    /*
-
-         cout<<p->type;
-        // TrainCar* prev=nullptr;prev->prev=p;
-       //  cout<<prev->prev->type;
-
-     //cout<<prev->prev->type;
-   // prev->prev=p;printTrain(prev);
-                while(p!=nullptr){
-                    //cout<<p->type;
-                    if(p->type==type){
-                        count++;
-                    }if(p!=nullptr)
-                        p=p->prev;
-                } 
-                         cout<<p->type;
-
-    //TrainCar* car=ll_search(head,type);
-    do{        TrainCar* car=rev_search(head,type,count);
-
-       // cout<<"cartype"<<car->type<<"carload"<<car->load;
-        if (car==nullptr||(count==1&&car->load<unload_amount))
-            return false;
-        if (car->load-unload_amount>0)
-            car->load=car->load-unload_amount;
-        else if(!(car->load-unload_amount>0)){
-            unload_amount=unload_amount-car->load;
-            car->load=0;
-        printTrain(head);
-        }
-       // cout<<count;
-        count--;
-        //if(count>0)
-
-    }while(count>0);            
-
-  */          
+    
     return 1;
+}
+void rem(int arr[], int& count){
+for(int i=0;i<count;i++){
+   for(int j = i+1; j < count; j++){
+      if(arr[i] == arr[j] &&arr[i]>0&&arr[i]<6){
+         for(int k = j; k <count; k++){
+            arr[k] = arr[k+1];
+         }
+         j--;
+         count--;
+      }
+   }
+}
+/*
+int temp[CARGO_TYPE_COUNT];
+int i;
+for (i=0; i<CARGO_TYPE_COUNT-1; i++)
+    if(arr[i]>0&&arr[i]<6)
+        if (arr[i] != arr[i+1])
+            temp[count++] = arr[i];
+            //temp[count++] = arr[CARGO_TYPE_COUNT-1];*/
+for (int i=0; i<count; i++){
+	//arr[i] = temp[i];
+    cout<<arr[i]<<" "<<endl;}
+	//return count;
 }
 
 void printCargoStats(const TrainCar* head)
-{
+{   
+    TrainCar* newHead = head->next;
+    TrainCar*   p=newHead;
+    TrainCar*   current=newHead;
+    const char enumToStringMapping[6][8] = {"HEAD", "OIL", "COAL", "WOOD", "STEEL", "SUGAR"};
+
+      const int B=ll_length(p)-1;
+    //int *arr={};
+    int arr[CARGO_TYPE_COUNT];
+    int count=5;
+    for (int i = 0; 
+        i < B  &&  p->next != nullptr; 
+    p = p->next, ++i)
+        for(int j=1; j<B;j++)
+            if(arr[i]!=arr[j]){
+                arr[i]=p->type;}
+                //cout<<"arr:"<<arr[i];}
+;   rem(arr, count);
+       /* for(int i=0; i<sizeof(arr)/sizeof(int);i++)
+                for(int j=1; j<sizeof(arr)/sizeof(int);j++)
+            if(arr[i]!=arr[j])
+                if(arr[j]>0&&arr[j]<6)
+
+                count++;
+              //  arr[i]=p->type;
+            //if(arr[j]>0&&arr[j]<6){
+             //   count++;*/
+            //}
+//cout<<sizeof(arr)/sizeof(int);
+bool isEnd=false;
+cout<<"count:"<<count;
+for(int j=0; j<count;j++){    current=newHead;
+
+    cout<<enumToStringMapping[arr[j]]<<":";
+    int load=0;
+    int maxLoad=0;
+    while(current!=nullptr){
+        if(current->type==arr[j]){
+            load+=current->load;
+            maxLoad+=current->maxLoad;
+        }if(current!=nullptr)
+            {current=current->next;
+            }
+        if(current==nullptr)
+            break;
+    }cout<<load<<"/"<<maxLoad;
+    if(arr[j+1]>0&&arr[j+1]<6)//(arr[j]!=arr[count-1])
+        cout<<",";
+    else{
+        cout<<endl;
+        //isEnd=true;
+        break;
+        }
+       // cout<<(arr[j]);
+}
+    
+    
+    /*int count=0;
+    TrainCar* newHead = head->next;
+        while(head->next!=nullptr){
+            if(head->next->type==newHead->type){
+                count++;
+        }if(newHead->next!=nullptr)
+            newHead=newHead->next;
+        } 
+    while(head->next!=nullptr){
+        TrainCar* newHead = head->next;
+
+    }
+*/
 }
 
 void divide(const TrainCar* head,  TrainCar* results[CARGO_TYPE_COUNT])

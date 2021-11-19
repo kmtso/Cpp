@@ -40,9 +40,9 @@ TrainCar* createSampleTrain2() //this function manually creates a pre-defined tr
     cars[1] = new TrainCar;
     cars[2] = new TrainCar;
     cars[3] = new TrainCar;
-    cars[0]->type = COAL; cars[0]->load = 17; cars[0]->maxLoad = 440; cars[0]->prev = cars[0]->next = nullptr;
-    cars[1]->type = WOOD; cars[1]->load = 23; cars[1]->maxLoad = 110; cars[1]->prev = cars[1]->next = nullptr;
-    cars[2]->type = SUGAR; cars[2]->load = 67; cars[2]->maxLoad = 220; cars[2]->prev = cars[2]->next = nullptr;
+    cars[0]->type = WOOD; cars[0]->load = 17; cars[0]->maxLoad = 440; cars[0]->prev = cars[0]->next = nullptr;
+    cars[1]->type = SUGAR; cars[1]->load = 23; cars[1]->maxLoad = 110; cars[1]->prev = cars[1]->next = nullptr;
+    cars[2]->type = WOOD; cars[2]->load = 67; cars[2]->maxLoad = 220; cars[2]->prev = cars[2]->next = nullptr;
     cars[3]->type = WOOD; cars[3]->load = 11; cars[3]->maxLoad = 330; cars[3]->prev = cars[3]->next = nullptr;
     head->next = cars[0];
     cars[0]->next = cars[1];
