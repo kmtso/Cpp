@@ -535,6 +535,51 @@ results[j]=createTrainHead();res_current=results[j];
 
 }
 }
+int* findAllSubsets(int *loadBag, int i, int n,int *subset, int j, int& maxLoad, int& load, int upperBound,int*arr,int&optCargoCount){   
+   /* if(load>maxLoad&&load<=upperBound){
+        maxLoad=load;
+        
+    }
+    if(load==upperBound){
+        return;
+    }*/
+        if(i==n){
+        // print the subset array
+        int idx = 0;
+        int load=0;
+        while(idx<j){
+            cout<<subset[idx]<<' ';
+            load+=subset[idx];
+            
+
+            //    arr[idx]=subset[idx];
+
+            /*if(load==upperBound){
+                return;
+            }*/++idx;
+        }                         
+
+        if(load>maxLoad&&load<=upperBound){
+               maxLoad=load;
+                optCargoCount=j;
+                cout<<"load"<<load;
+                for(int i=0;i<optCargoCount;i++){
+                    arr[i]=subset[i];cout<<arr[i];
+                }}cout<<"maxload"<<maxLoad;
+        cout<<endl;
+        //optCargoCount=j;
+        cout<<optCargoCount<<endl;
+        return arr; 
+        //return;
+    }if(maxLoad!=upperBound){
+    findAllSubsets(loadBag,i+1,n,subset,j,maxLoad,load,upperBound,arr,optCargoCount);
+
+    subset[j] = loadBag[i];
+    findAllSubsets(loadBag,i+1,n,subset,j+1,maxLoad,load,upperBound,arr,optCargoCount);
+         //   
+         }
+return subset;
+}   
 
 TrainCar* optimizeForMaximumPossibleCargos(const TrainCar* head, int upperBound)
 {
@@ -556,6 +601,7 @@ TrainCar* optimizeForMaximumPossibleCargos(const TrainCar* head, int upperBound)
 
 
       const int B=ll_length(p);
+      cout<<B;
       int* loadBag=new int[B];
 /*
     CarType arr[CARGO_TYPE_COUNT];
@@ -571,19 +617,41 @@ TrainCar* optimizeForMaximumPossibleCargos(const TrainCar* head, int upperBound)
     int cargoCount=0;
     int load=0;
     int maxLoad=0;
+    int optCargoCount=0;
     while(current!=nullptr){
 
-            if(load+current->load<upperBound){
-                load+=current->load;
+            //if(load+current->load<upperBound){
+                //load+=current->load;
                 loadBag[cargoCount]=current->load;
                 cargoCount++;
-            }if(current!=nullptr)
+            //}
+            if(current!=nullptr)
                 {current=current->next;
                 }
             if(current==nullptr)
                 break;
 
     }
+    int* subset=new int[B];
+    int* arr=new int[B];
+    findAllSubsets(loadBag,0,B,subset,0, maxLoad, load,upperBound,arr, optCargoCount);   
+    for(int i=0;i<B;i++){
+        cout<<arr[i];
+    }/*
+    for(int i=0;i<B;i++){
+        if(load<=upperBound){
+            maxLoad=(maxLoad>load)?maxLoad:load;
+        }
+        while (optCargoCount < i && load + loadBag[i] > upperBound) {
+            load -= loadBag[optCargoCount];
+            optCargoCount++;
+        }
+        load+=loadBag[i];
+        arr[i-1]=loadBag[i];
+        cout<<load<<endl;
+    }
+*/
+
     //cout<<cargoCount<<endl;
    // cout<<load;
     int createCount=0;
@@ -598,7 +666,7 @@ TrainCar* res_current=results_head;
     while(current!=nullptr){
            // printTrain(results_head);
 
-        if(createCount<cargoCount&&current->load==loadBag[createCount]){
+        if(createCount<optCargoCount&&current->load==arr[createCount]){
            // if(current->load==loadBag[createCount]){}
            // cout<<"cargotype:"<<arr[j];
             TrainCar* p2 = new  TrainCar;
