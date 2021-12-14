@@ -601,7 +601,7 @@ TrainCar* optimizeForMaximumPossibleCargos(const TrainCar* head, int upperBound)
 
 
       const int B=ll_length(p);
-      cout<<B;
+      //cout<<B;
       int* loadBag=new int[B];
 /*
     CarType arr[CARGO_TYPE_COUNT];
